@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "myth": "Physiotherapy is painful",
+    "fact": "While some discomfort may occur during certain techniques, physiotherapy is designed to work within your comfort level. Therapists communicate throughout treatment and will adjust or stop if you experience significant pain. Most patients feel relief, not increased pain, after sessions."
+  },
+  {
+    "id": 2,
+    "myth": "It's only for old people",
+    "fact": "Physiotherapy benefits people of all ages—from infants with developmental delays to athletes recovering from injury to office workers with posture issues. Whether you're 8 or 80, physiotherapy can help improve movement, reduce pain, and enhance quality of life."
+  },
+  {
+    "id": 3,
+    "myth": "It's only for athletes",
+    "fact": "While athletes commonly use physiotherapy for sports injuries, it helps anyone with musculoskeletal pain, post-surgical recovery, chronic conditions like arthritis, workplace injuries, or everyday aches. Desk workers, parents, and retirees all benefit from physiotherapy."
+  },
+  {
+    "id": 4,
+    "myth": "Rest is always better than physiotherapy",
+    "fact": "Prolonged rest can lead to muscle weakness, stiffness, and delayed recovery. Evidence shows that early, guided movement and exercise—as prescribed by a physiotherapist—often speeds healing and prevents complications. Rest has its place, but active rehabilitation is usually key."
+  },
+  {
+    "id": 5,
+    "myth": "You need a doctor's referral",
+    "fact": "In most cases, you can see a physiotherapist directly without a referral. Physiotherapists are first-contact practitioners trained to assess and treat musculoskeletal conditions. However, some insurance plans may require a referral for reimbursement—check with your provider."
+  },
+  {
+    "id": 6,
+    "myth": "It takes too many sessions to see results",
+    "fact": "Many patients notice improvement within the first few sessions. Acute issues may resolve in 4–6 visits, while chronic conditions may need more. Your therapist will set realistic expectations and adjust the plan based on your progress. Consistency with home exercises also speeds results."
+  },
+  {
+    "id": 7,
+    "myth": "Machines do all the work",
+    "fact": "Physiotherapy is hands-on and patient-centered. While modalities like ultrasound or TENS can support treatment, the core of therapy is manual techniques, exercise prescription, and education. Your active participation—through movement and home exercises—is essential for recovery."
+  },
+  {
+    "id": 8,
+    "myth": "Just watching YouTube exercises is enough",
+    "fact": "Generic online exercises may not address your specific condition and can even worsen some injuries. A physiotherapist assesses your body, identifies the root cause, and prescribes a tailored program. Incorrect form or inappropriate exercises can cause harm."
+  },
+  {
+    "id": 9,
+    "myth": "Physiotherapy is just massage",
+    "fact": "Massage is one of many techniques used in physiotherapy. Physiotherapists also perform joint mobilizations, spinal manipulation, dry needling, exercise prescription, and patient education. The goal is to restore function and empower you to manage your condition, not just provide temporary relief."
+  },
+  {
+    "id": 10,
+    "myth": "You only need physio after surgery",
+    "fact": "Physiotherapy is valuable before surgery (prehab) to strengthen muscles and improve outcomes, during recovery (rehab), and for many conditions that don't require surgery at all. Early treatment for pain or injury can often prevent the need for surgery."
+  }
+]

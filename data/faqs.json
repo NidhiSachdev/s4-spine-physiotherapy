@@ -1,0 +1,106 @@
+[
+  {
+    "topic": "General Physiotherapy Questions",
+    "questions": [
+      {
+        "question": "What is physiotherapy?",
+        "answer": "Physiotherapy is a healthcare profession that focuses on restoring and maintaining movement, function, and quality of life through physical assessment, manual therapy, exercise prescription, and patient education. At S4 Spine, our physiotherapists use evidence-based techniques to treat pain, improve mobility, and help you recover from injury or manage chronic conditions."
+      },
+      {
+        "question": "When should I see a physiotherapist?",
+        "answer": "You should consider seeing a physiotherapist if you experience persistent pain, stiffness, or reduced mobility; have recently been injured; suffer from chronic conditions like arthritis or back pain; need post-surgical rehabilitation; or want to prevent injury through movement assessment. Early intervention often leads to faster recovery and better outcomes."
+      },
+      {
+        "question": "Is physiotherapy painful?",
+        "answer": "Physiotherapy is generally not painful, though some techniques may cause mild discomfort. Our therapists work within your comfort level and will communicate with you throughout treatment. Any temporary discomfort during manual therapy or stretching is typically followed by relief. We prioritize your comfort and will adjust techniques as needed."
+      },
+      {
+        "question": "How long is a typical physiotherapy session?",
+        "answer": "A typical physiotherapy session at S4 Spine lasts 45 to 60 minutes. This includes assessment time, hands-on treatment, exercise instruction, and education. Your first visit may be slightly longer to allow for a comprehensive evaluation and treatment plan development."
+      },
+      {
+        "question": "Do I need a doctor's referral to see a physiotherapist?",
+        "answer": "No, you do not need a doctor's referral to book an appointment with us. Physiotherapists are first-contact practitioners, meaning you can visit directly. However, if you have insurance that requires a referral for reimbursement, we recommend obtaining one from your doctor before your visit."
+      },
+      {
+        "question": "What should I wear to my physiotherapy appointment?",
+        "answer": "Wear comfortable, loose-fitting clothing that allows easy movement and access to the area being treated. For back or lower body issues, athletic wear or shorts are ideal. For shoulder or neck treatment, a tank top or loose shirt works well. Avoid restrictive clothing, and feel free to bring a change of clothes if needed."
+      }
+    ]
+  },
+  {
+    "topic": "Treatment-Specific Questions",
+    "questions": [
+      {
+        "question": "What types of treatments do you offer?",
+        "answer": "We offer a wide range of treatments including manual therapy (joint mobilization, soft tissue release), exercise-based rehabilitation, electrotherapy (ultrasound, TENS, electrical stimulation), heat and cold therapy, dry needling, and postural correction. Our treatment plans are customized based on your condition, goals, and response to therapy."
+      },
+      {
+        "question": "How many sessions will I need?",
+        "answer": "The number of sessions varies depending on your condition, severity, and how well you respond to treatment. Acute issues may resolve in 4–6 sessions, while chronic conditions or post-surgical rehab may require 8–20+ sessions. Your physiotherapist will provide an estimated treatment plan after your initial assessment."
+      },
+      {
+        "question": "Do you use electrotherapy?",
+        "answer": "Yes, we use electrotherapy modalities such as ultrasound, TENS (Transcutaneous Electrical Nerve Stimulation), and electrical muscle stimulation when clinically appropriate. These modalities can help reduce pain, decrease inflammation, and promote healing. They are used as part of a comprehensive treatment plan, not as standalone therapy."
+      },
+      {
+        "question": "What is manual therapy?",
+        "answer": "Manual therapy involves hands-on techniques where the physiotherapist uses their hands to apply pressure, mobilize joints, and manipulate soft tissues. This includes joint mobilizations, spinal manipulation, soft tissue massage, and myofascial release. Manual therapy helps reduce pain, improve range of motion, and restore normal movement patterns."
+      },
+      {
+        "question": "Will I receive an exercise program?",
+        "answer": "Yes, most treatment plans include a personalized exercise program tailored to your condition and goals. Exercises may focus on strengthening, flexibility, balance, or functional movements. Your therapist will teach you each exercise and provide written or digital instructions for your home practice."
+      },
+      {
+        "question": "Are home exercises important?",
+        "answer": "Absolutely. Home exercises are a crucial part of your recovery and often determine how quickly you improve. Consistency with your prescribed exercises between sessions helps maintain progress and accelerates healing. Your therapist will give you a manageable program that fits your lifestyle."
+      }
+    ]
+  },
+  {
+    "topic": "Booking & Visit Questions",
+    "questions": [
+      {
+        "question": "How do I book an appointment?",
+        "answer": "You can book an appointment through our website's booking page, by calling our clinic directly, or via WhatsApp. We offer online booking for your convenience, and our team will confirm your appointment. Same-day or next-day slots may be available depending on demand."
+      },
+      {
+        "question": "What is your cancellation policy?",
+        "answer": "We request at least 24 hours notice for cancellations or rescheduling to allow us to offer the slot to other patients. Cancellations made with less notice may be subject to a fee. In case of emergencies or illness, please contact us as soon as possible and we will do our best to accommodate you."
+      },
+      {
+        "question": "What should I bring to my first visit?",
+        "answer": "Please bring any relevant medical reports, imaging (X-rays, MRI) if you have them, a list of current medications, and your insurance details if applicable. Wear comfortable clothing and arrive a few minutes early to complete any necessary paperwork."
+      },
+      {
+        "question": "What can I expect during my first visit?",
+        "answer": "Your first visit includes a thorough assessment: we'll discuss your medical history, symptoms, and goals; perform a physical examination; and develop a personalized treatment plan. You may receive some treatment during the same visit. We'll explain everything clearly and answer any questions you have."
+      },
+      {
+        "question": "Do you offer online consultations?",
+        "answer": "Yes, we offer online video consultations for follow-up sessions, exercise guidance, and advice when an in-person visit isn't possible. Initial assessments are typically done in person for a proper physical examination, but we can discuss your options based on your situation."
+      }
+    ]
+  },
+  {
+    "topic": "Insurance & Payment Questions",
+    "questions": [
+      {
+        "question": "Do you accept insurance?",
+        "answer": "We accept many major health insurance plans. Please contact us with your insurance details and we can verify your coverage. We provide invoices and documentation that you can submit for reimbursement if we don't directly bill your insurer. Cashless facilities may be available for certain plans."
+      },
+      {
+        "question": "How much does a session cost?",
+        "answer": "Session costs vary based on the type of treatment and duration. Our standard consultation and treatment session is competitively priced. Please call or visit our booking page for current rates. We also offer package deals for multiple sessions that can reduce the per-session cost."
+      },
+      {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept cash, credit/debit cards, UPI, and bank transfers. Payment is typically made at the end of each session. For package bookings, we may offer flexible payment options. Please ask our front desk for details."
+      },
+      {
+        "question": "Do you offer packages or discounts?",
+        "answer": "Yes, we offer session packages (e.g., 5, 10, or more sessions) at a discounted rate compared to single sessions. Packages are ideal if your treatment plan requires multiple visits. We also occasionally run promotional offers—check with us or our website for current deals."
+      }
+    ]
+  }
+]

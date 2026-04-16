@@ -1,0 +1,218 @@
+[
+  {
+    "id": "neck",
+    "label": "Head & Neck",
+    "description": "Covers the skull, cervical spine, and surrounding muscles",
+    "commonConditions": ["Migraines", "Cervical spondylosis", "Neck stiffness", "Whiplash", "Tension headaches"],
+    "bodyPartKeys": ["head", "neck"],
+    "stat": "Most common in ages 25-55",
+    "view": "front"
+  },
+  {
+    "id": "left-shoulder",
+    "label": "Left Shoulder",
+    "description": "The left shoulder joint, rotator cuff, and deltoid muscles",
+    "commonConditions": ["Frozen shoulder", "Rotator cuff tear", "Shoulder impingement", "Bursitis", "Tendinopathy"],
+    "bodyPartKeys": ["shoulder"],
+    "stat": "Peak incidence in 40-60 age group",
+    "view": "front"
+  },
+  {
+    "id": "right-shoulder",
+    "label": "Right Shoulder",
+    "description": "The right shoulder joint, rotator cuff, and deltoid muscles",
+    "commonConditions": ["Frozen shoulder", "Rotator cuff tear", "Shoulder impingement", "Bursitis", "Tendinopathy"],
+    "bodyPartKeys": ["shoulder"],
+    "stat": "Peak incidence in 40-60 age group",
+    "view": "front"
+  },
+  {
+    "id": "chest",
+    "label": "Chest",
+    "description": "Pectoral muscles, sternum, and rib cage area",
+    "commonConditions": ["Costochondritis", "Pectoral strain", "Rib dysfunction", "Postural pain", "Thoracic stiffness"],
+    "bodyPartKeys": ["chest"],
+    "stat": "Often related to desk work and poor posture",
+    "view": "front"
+  },
+  {
+    "id": "left-elbow",
+    "label": "Left Elbow",
+    "description": "Left elbow joint and surrounding tendons",
+    "commonConditions": ["Tennis elbow", "Golfer's elbow", "Olecranon bursitis", "Elbow stiffness", "Ulnar nerve irritation"],
+    "bodyPartKeys": ["elbow"],
+    "stat": "Overuse injuries common in 35-55 age group",
+    "view": "front"
+  },
+  {
+    "id": "right-elbow",
+    "label": "Right Elbow",
+    "description": "Right elbow joint and surrounding tendons",
+    "commonConditions": ["Tennis elbow", "Golfer's elbow", "Olecranon bursitis", "Elbow stiffness", "Ulnar nerve irritation"],
+    "bodyPartKeys": ["elbow"],
+    "stat": "Overuse injuries common in 35-55 age group",
+    "view": "front"
+  },
+  {
+    "id": "core",
+    "label": "Core & Abdomen",
+    "description": "Abdominal muscles, obliques, and lumbar core stabilizers",
+    "commonConditions": ["Core weakness", "Lower back pain", "Diastasis recti", "Abdominal strain", "Postural instability"],
+    "bodyPartKeys": ["core"],
+    "stat": "Core strength declines with age without training",
+    "view": "front"
+  },
+  {
+    "id": "left-wrist",
+    "label": "Left Wrist & Hand",
+    "description": "Left wrist, hand, and fingers",
+    "commonConditions": ["Carpal tunnel syndrome", "Wrist sprain", "De Quervain's tenosynovitis", "Arthritis", "Repetitive strain"],
+    "bodyPartKeys": ["wrist", "hand"],
+    "stat": "Screen workers at higher risk",
+    "view": "front"
+  },
+  {
+    "id": "right-wrist",
+    "label": "Right Wrist & Hand",
+    "description": "Right wrist, hand, and fingers",
+    "commonConditions": ["Carpal tunnel syndrome", "Wrist sprain", "De Quervain's tenosynovitis", "Arthritis", "Repetitive strain"],
+    "bodyPartKeys": ["wrist", "hand"],
+    "stat": "Screen workers at higher risk",
+    "view": "front"
+  },
+  {
+    "id": "left-hip",
+    "label": "Left Hip",
+    "description": "Left hip joint, gluteal muscles, and groin area",
+    "commonConditions": ["Hip osteoarthritis", "Hip bursitis", "Labral tear", "Piriformis syndrome", "Hip flexor strain"],
+    "bodyPartKeys": ["hip"],
+    "stat": "Hip pain increases significantly after 50",
+    "view": "front"
+  },
+  {
+    "id": "right-hip",
+    "label": "Right Hip",
+    "description": "Right hip joint, gluteal muscles, and groin area",
+    "commonConditions": ["Hip osteoarthritis", "Hip bursitis", "Labral tear", "Piriformis syndrome", "Hip flexor strain"],
+    "bodyPartKeys": ["hip"],
+    "stat": "Hip pain increases significantly after 50",
+    "view": "front"
+  },
+  {
+    "id": "left-knee",
+    "label": "Left Knee",
+    "description": "Left knee joint, ligaments, and surrounding structures",
+    "commonConditions": ["Patellofemoral pain", "ACL tear", "Meniscus injury", "Osteoarthritis", "Runner's knee"],
+    "bodyPartKeys": ["knee"],
+    "stat": "Knee pain affects 1 in 4 adults",
+    "view": "front"
+  },
+  {
+    "id": "right-knee",
+    "label": "Right Knee",
+    "description": "Right knee joint, ligaments, and surrounding structures",
+    "commonConditions": ["Patellofemoral pain", "ACL tear", "Meniscus injury", "Osteoarthritis", "Runner's knee"],
+    "bodyPartKeys": ["knee"],
+    "stat": "Knee pain affects 1 in 4 adults",
+    "view": "front"
+  },
+  {
+    "id": "left-ankle",
+    "label": "Left Ankle & Foot",
+    "description": "Left ankle, foot, and toes",
+    "commonConditions": ["Ankle sprain", "Plantar fasciitis", "Achilles tendinopathy", "Neuropathy", "Arthritis"],
+    "bodyPartKeys": ["ankle", "foot"],
+    "stat": "Ankle sprains are most common sports injury",
+    "view": "front"
+  },
+  {
+    "id": "right-ankle",
+    "label": "Right Ankle & Foot",
+    "description": "Right ankle, foot, and toes",
+    "commonConditions": ["Ankle sprain", "Plantar fasciitis", "Achilles tendinopathy", "Neuropathy", "Arthritis"],
+    "bodyPartKeys": ["ankle", "foot"],
+    "stat": "Ankle sprains are most common sports injury",
+    "view": "front"
+  },
+  {
+    "id": "upper-back",
+    "label": "Upper Back",
+    "description": "Thoracic spine, scapulae, and upper back muscles",
+    "commonConditions": ["Thoracic stiffness", "Scapular dyskinesis", "Upper back pain", "Postural strain", "Costovertebral dysfunction"],
+    "bodyPartKeys": ["back"],
+    "stat": "Often linked to prolonged sitting",
+    "view": "back"
+  },
+  {
+    "id": "lower-back",
+    "label": "Lower Back",
+    "description": "Lumbar spine, sacrum, and lower back muscles",
+    "commonConditions": ["Lower back pain", "Sciatica", "Disc herniation", "Spinal stenosis", "Mechanical back pain"],
+    "bodyPartKeys": ["back", "spine"],
+    "stat": "Leading cause of disability worldwide",
+    "view": "back"
+  },
+  {
+    "id": "back-neck",
+    "label": "Neck & Cervical Spine",
+    "description": "Posterior neck, cervical spine, and upper trapezius",
+    "commonConditions": ["Cervical spondylosis", "Neck pain", "Whiplash", "Tension headaches", "Radiculopathy"],
+    "bodyPartKeys": ["neck", "spine"],
+    "stat": "Screen time increases cervical strain",
+    "view": "back"
+  },
+  {
+    "id": "back-left-shoulder",
+    "label": "Left Shoulder (Back)",
+    "description": "Posterior left shoulder and scapular region",
+    "commonConditions": ["Rotator cuff tear", "Frozen shoulder", "Scapular winging", "Impingement", "Tendinopathy"],
+    "bodyPartKeys": ["shoulder"],
+    "stat": "Often related to overhead activities",
+    "view": "back"
+  },
+  {
+    "id": "back-right-shoulder",
+    "label": "Right Shoulder (Back)",
+    "description": "Posterior right shoulder and scapular region",
+    "commonConditions": ["Rotator cuff tear", "Frozen shoulder", "Scapular winging", "Impingement", "Tendinopathy"],
+    "bodyPartKeys": ["shoulder"],
+    "stat": "Often related to overhead activities",
+    "view": "back"
+  },
+  {
+    "id": "back-left-hip",
+    "label": "Left Hip (Back)",
+    "description": "Posterior left hip and gluteal region",
+    "commonConditions": ["Piriformis syndrome", "Hip bursitis", "Gluteal tendinopathy", "SI joint dysfunction", "Sciatica"],
+    "bodyPartKeys": ["hip"],
+    "stat": "Common in runners and cyclists",
+    "view": "back"
+  },
+  {
+    "id": "back-right-hip",
+    "label": "Right Hip (Back)",
+    "description": "Posterior right hip and gluteal region",
+    "commonConditions": ["Piriformis syndrome", "Hip bursitis", "Gluteal tendinopathy", "SI joint dysfunction", "Sciatica"],
+    "bodyPartKeys": ["hip"],
+    "stat": "Common in runners and cyclists",
+    "view": "back"
+  },
+  {
+    "id": "back-left-knee",
+    "label": "Left Knee (Back)",
+    "description": "Posterior left knee and hamstring insertion",
+    "commonConditions": ["Hamstring strain", "Baker's cyst", "Popliteal pain", "Knee osteoarthritis", "Post-surgical stiffness"],
+    "bodyPartKeys": ["knee"],
+    "stat": "Posterior knee pain often overlooked",
+    "view": "back"
+  },
+  {
+    "id": "back-right-knee",
+    "label": "Right Knee (Back)",
+    "description": "Posterior right knee and hamstring insertion",
+    "commonConditions": ["Hamstring strain", "Baker's cyst", "Popliteal pain", "Knee osteoarthritis", "Post-surgical stiffness"],
+    "bodyPartKeys": ["knee"],
+    "stat": "Posterior knee pain often overlooked",
+    "view": "back"
+  }
+]

@@ -1,0 +1,119 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "type": "body-map",
+      "question": "Where is your pain or discomfort?",
+      "options": [
+        { "value": "head", "label": "Head & Neck" },
+        { "value": "neck", "label": "Neck" },
+        { "value": "shoulder", "label": "Shoulder" },
+        { "value": "back", "label": "Back" },
+        { "value": "spine", "label": "Spine" },
+        { "value": "elbow", "label": "Elbow" },
+        { "value": "wrist", "label": "Wrist & Hand" },
+        { "value": "hip", "label": "Hip" },
+        { "value": "knee", "label": "Knee" },
+        { "value": "ankle", "label": "Ankle & Foot" },
+        { "value": "chest", "label": "Chest" },
+        { "value": "core", "label": "Core / Abdomen" }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "single",
+      "question": "How long have you had this issue?",
+      "options": [
+        { "value": "less-1-week", "label": "Less than 1 week" },
+        { "value": "1-4-weeks", "label": "1-4 weeks" },
+        { "value": "1-6-months", "label": "1-6 months" },
+        { "value": "6-plus-months", "label": "6+ months" }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "single",
+      "question": "How would you describe the pain?",
+      "options": [
+        { "value": "sharp", "label": "Sharp" },
+        { "value": "dull", "label": "Dull ache" },
+        { "value": "burning", "label": "Burning" },
+        { "value": "stiffness", "label": "Stiffness" },
+        { "value": "numbness", "label": "Numbness / Tingling" }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "single",
+      "question": "What makes it worse?",
+      "options": [
+        { "value": "sitting", "label": "Sitting" },
+        { "value": "standing", "label": "Standing" },
+        { "value": "movement", "label": "Movement" },
+        { "value": "rest", "label": "Rest" },
+        { "value": "morning", "label": "Worse in morning" },
+        { "value": "night", "label": "Worse at night" }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "slider",
+      "question": "Rate your pain level",
+      "min": 1,
+      "max": 10,
+      "labels": { "1": "Mild", "5": "Moderate", "10": "Severe" }
+    },
+    {
+      "id": 6,
+      "type": "single",
+      "question": "Have you had any previous injuries or surgeries in this area?",
+      "options": [
+        { "value": "yes", "label": "Yes" },
+        { "value": "no", "label": "No" }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "single",
+      "question": "What is your age group?",
+      "options": [
+        { "value": "under-18", "label": "Under 18" },
+        { "value": "18-30", "label": "18-30" },
+        { "value": "31-50", "label": "31-50" },
+        { "value": "51-65", "label": "51-65" },
+        { "value": "over-65", "label": "Over 65" }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "single",
+      "question": "What is your activity level?",
+      "options": [
+        { "value": "sedentary", "label": "No Activity" },
+        { "value": "light", "label": "Lightly active" },
+        { "value": "moderate", "label": "Moderately active" },
+        { "value": "very-active", "label": "Very active" },
+        { "value": "athlete", "label": "Athlete" }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "single",
+      "question": "What is your primary goal?",
+      "options": [
+        { "value": "pain-relief", "label": "Pain relief" },
+        { "value": "mobility", "label": "Improved mobility" },
+        { "value": "return-sport", "label": "Return to sport" },
+        { "value": "post-surgery", "label": "Post-surgery recovery" },
+        { "value": "prevention", "label": "Prevention" },
+        { "value": "wellness", "label": "General wellness" }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "textarea",
+      "question": "Any additional information you'd like to share?",
+      "placeholder": "Optional — describe your condition, previous treatments, or any other details..."
+    }
+  ]
+}

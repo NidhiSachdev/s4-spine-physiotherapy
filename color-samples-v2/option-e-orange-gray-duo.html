@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option E — Logo Duo (Orange + Gray)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;color:#374151;background:#fff}
+h1,h2,h3,h4{font-family:Georgia,'Times New Roman',serif;color:#1F2937}
+.label{position:fixed;top:16px;right:16px;z-index:999;background:linear-gradient(135deg,#E8782A,#6B7280);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+
+header{background:#fff;padding:0 24px;position:sticky;top:0;z-index:50;box-shadow:0 1px 0 #E5E7EB}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo-area{display:flex;align-items:center;gap:12px}
+.logo-circle{width:50px;height:50px;background:#E8782A;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px}
+.logo-text span{display:block}
+.logo-text .brand{font-weight:700;font-size:17px;color:#6B7280}
+.logo-text .brand b{color:#E8782A}
+.logo-text .sub{font-size:11px;color:#9CA3AF;letter-spacing:1px}
+nav a{color:#6B7280;text-decoration:none;font-size:14px;font-weight:500;padding:8px 14px;border-radius:8px;transition:.2s}
+nav a:hover{color:#E8782A;background:#FFF7ED}
+.btn-book{background:#E8782A;color:#fff;padding:10px 22px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;transition:.2s}
+.btn-book:hover{background:#D4691F}
+
+.hero{background:#E8782A;padding:80px 24px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-80px;left:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,0,0,.08),transparent 70%);border-radius:50%}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.2);color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;margin-bottom:20px;backdrop-filter:blur(4px)}
+.hero h1{font-size:46px;line-height:1.15;margin-bottom:20px;color:#fff}
+.hero h1 .highlight{color:#FED7AA}
+.hero p{font-size:17px;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:32px}
+.hero-buttons{display:flex;gap:14px}
+.btn-primary{background:#fff;color:#E8782A;padding:14px 32px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;transition:.2s;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.btn-primary:hover{background:#FFF7ED}
+.btn-secondary{border:2px solid rgba(255,255,255,.5);color:#fff;padding:14px 32px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;transition:.2s;background:transparent}
+.btn-secondary:hover{background:rgba(255,255,255,.1);border-color:#fff}
+.hero-visual{display:flex;justify-content:center}
+.hero-circle{width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;position:relative;backdrop-filter:blur(4px)}
+.hero-circle-inner{font-size:80px}
+.float-tag{position:absolute;color:#fff;padding:8px 16px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.float-tag.top{top:-10px;right:-10px;background:#6B7280}
+.float-tag.bottom{bottom:0;left:-20px;background:#374151}
+
+.trust{padding:32px 24px;background:#F9FAFB;border-bottom:1px solid #E5E7EB}
+.trust-inner{max-width:1200px;margin:0 auto;text-align:center}
+.trust p{font-size:11px;color:#9CA3AF;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+.trust-logos{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;font-size:14px}
+.trust-logos span{color:#9CA3AF}
+
+.counters{padding:64px 24px;background:#fff}
+.counters-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.counter-card{padding:32px 16px;border-radius:16px;background:#fff;border:1px solid #E5E7EB}
+.counter-num{font-size:36px;font-weight:800;color:#E8782A;margin-bottom:4px}
+.counter-label{font-size:14px;color:#6B7280}
+
+.categories{padding:72px 24px;background:#F9FAFB}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header h2{font-size:34px;margin-bottom:12px}
+.section-header h2 .acc{color:#E8782A}
+.section-header p{color:#6B7280;font-size:16px;max-width:550px;margin:0 auto}
+.cat-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.cat-card{background:#fff;border-radius:14px;padding:28px 20px;border:1px solid #E5E7EB;text-align:center;transition:.3s;cursor:pointer}
+.cat-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06);border-color:#E8782A}
+.cat-icon{width:52px;height:52px;border-radius:12px;background:#FFF7ED;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:24px}
+.cat-card h3{font-size:16px;margin-bottom:8px;color:#1F2937}
+.cat-card p{font-size:13px;color:#6B7280;line-height:1.5}
+
+.how{padding:72px 24px;background:#fff}
+.how-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:40px;text-align:center}
+.how-num{width:56px;height:56px;background:linear-gradient(135deg,#E8782A,#D4691F);color:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin:0 auto 16px;box-shadow:0 4px 12px #E8782A25}
+.how-step h3{font-size:18px;margin-bottom:8px}
+.how-step p{font-size:14px;color:#6B7280;line-height:1.6}
+
+.quiz{padding:72px 24px;background:#F9FAFB}
+.quiz-box{max-width:1000px;margin:0 auto;background:#6B7280;border-radius:20px;padding:56px 48px;color:#fff;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.quiz-box h2{font-size:30px;color:#fff;margin-bottom:12px}
+.quiz-box p{color:rgba(255,255,255,.75);font-size:15px;line-height:1.6;margin-bottom:24px}
+.btn-white{background:#E8782A;color:#fff;padding:14px 32px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;display:inline-block;transition:.2s}
+.btn-white:hover{background:#D4691F}
+.quiz-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.quiz-q{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:16px;text-align:center}
+.quiz-q .num{font-size:22px;font-weight:700;color:#FED7AA}
+.quiz-q .txt{font-size:12px;color:rgba(255,255,255,.5)}
+
+.testimonials{padding:72px 24px;background:#fff}
+.test-card{max-width:700px;margin:0 auto;text-align:center;background:#FFF7ED;border:1px solid #FED7AA;border-radius:20px;padding:48px 40px}
+.stars{color:#E8782A;font-size:22px;margin-bottom:16px}
+.test-card blockquote{font-size:18px;color:#374151;line-height:1.7;font-style:italic;margin-bottom:24px}
+.test-card .author{font-weight:600;color:#1F2937}
+.test-card .treatment{font-size:13px;color:#6B7280}
+
+.faq{padding:72px 24px;background:#F9FAFB}
+.faq-list{max-width:700px;margin:0 auto}
+.faq-item{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:20px 24px;margin-bottom:12px}
+.faq-item h4{font-size:15px;color:#1F2937;margin-bottom:8px}
+.faq-item p{font-size:14px;color:#6B7280;line-height:1.6}
+
+.contact-cta{padding:72px 24px;background:#fff}
+.contact-box{max-width:1000px;margin:0 auto;background:linear-gradient(135deg,#E8782A,#D4691F);border-radius:20px;padding:56px 48px;color:#fff;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.contact-box h2{font-size:30px;color:#fff;margin-bottom:12px}
+.contact-box>div:first-child p{color:rgba(255,255,255,.9);font-size:15px;margin-bottom:24px}
+.contact-btns{display:flex;gap:14px}
+.contact-info{display:flex;flex-direction:column;gap:16px}
+.contact-row{display:flex;align-items:center;gap:12px;font-size:14px}
+.contact-icon{width:40px;height:40px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+
+footer{background:#374151;color:rgba(255,255,255,.55);padding:56px 24px 32px}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+.footer-brand .name{color:#fff;font-weight:700;font-size:18px;margin-bottom:8px}
+.footer-brand .name b{color:#E8782A}
+.footer-brand p{font-size:13px;line-height:1.6}
+footer h4{color:rgba(255,255,255,.8);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer ul li a{color:rgba(255,255,255,.55);text-decoration:none;font-size:13px;transition:.2s}
+footer ul li a:hover{color:#E8782A}
+.footer-bottom{max-width:1200px;margin:32px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;font-size:12px}
+</style>
+</head>
+<body>
+<div class="label">E — Logo Duo (Orange + Gray)</div>
+<header><div class="header-inner"><div class="logo-area"><div class="logo-circle">S4</div><div class="logo-text"><span class="brand"><b>S4</b>Spine</span><span class="sub">PHYSIOTHERAPY CLINIC</span></div></div><nav><a href="#">Home</a><a href="#">Treatments</a><a href="#">Body Map</a><a href="#">Our Team</a><a href="#">Testimonials</a><a href="#">FAQ</a><a href="#">Contact</a></nav><a href="#" class="btn-book">Book Now</a></div></header>
+<section class="hero"><div class="hero-inner"><div><div class="hero-badge">Expert Physiotherapy Care</div><h1>Your Journey to <span class="highlight">Pain-Free</span> Living Starts Here</h1><p>Explore 40+ specialized treatments across 8 categories. From sports rehab to neurological care, find the right treatment and book your appointment.</p><div class="hero-buttons"><a href="#" class="btn-primary">Explore Treatments &rarr;</a><a href="#" class="btn-secondary">Book Appointment</a></div></div><div class="hero-visual"><div class="hero-circle"><div class="hero-circle-inner">🧬</div><div class="float-tag top">40+ Treatments</div><div class="float-tag bottom">1+ Specialist</div></div></div></div></section>
+<section class="trust"><div class="trust-inner"><p>Trusted & Accredited By</p><div class="trust-logos"><span>✓ Indian Association of Physiotherapists</span><span>✓ ISO 9001</span><span>✓ NABH Accredited</span><span>✓ Sports Authority</span><span>✓ WHO Compliant</span></div></div></section>
+<section class="counters"><div class="counters-inner"><div class="counter-card"><div class="counter-num">10,000+</div><div class="counter-label">Patients Treated</div></div><div class="counter-card"><div class="counter-num">15+</div><div class="counter-label">Years Experience</div></div><div class="counter-card"><div class="counter-num">40+</div><div class="counter-label">Treatments</div></div><div class="counter-card"><div class="counter-num">1+</div><div class="counter-label">Specialist</div></div></div></section>
+<section class="categories"><div class="section-header"><h2>Treatment <span class="acc">Categories</span></h2><p>Browse our comprehensive range of physiotherapy specialties.</p></div><div class="cat-grid"><div class="cat-card"><div class="cat-icon">🦴</div><h3>Musculoskeletal</h3><p>Back pain, joint rehab, arthritis, frozen shoulder</p></div><div class="cat-card"><div class="cat-icon">🧠</div><h3>Neurological</h3><p>Stroke recovery, Parkinson's, spinal cord injury</p></div><div class="cat-card"><div class="cat-icon">⚡</div><h3>Sports Rehab</h3><p>ACL recovery, tennis elbow, runner's knee</p></div><div class="cat-card"><div class="cat-icon">👶</div><h3>Pediatric</h3><p>Cerebral palsy, developmental delays, scoliosis</p></div><div class="cat-card"><div class="cat-icon">🧓</div><h3>Geriatric</h3><p>Balance training, fall prevention, osteoporosis</p></div><div class="cat-card"><div class="cat-icon">💗</div><h3>Women's Health</h3><p>Pelvic floor therapy, prenatal & postnatal</p></div><div class="cat-card"><div class="cat-icon">❤️</div><h3>Cardiopulmonary</h3><p>Cardiac rehab, COPD, breathing exercises</p></div><div class="cat-card"><div class="cat-icon">🏥</div><h3>Post-Surgical</h3><p>Hip & knee replacement, spinal surgery recovery</p></div></div></section>
+<section class="how"><div class="section-header"><h2>How It <span class="acc">Works</span></h2><p>Three simple steps to begin your recovery journey.</p></div><div class="how-grid"><div class="how-step"><div class="how-num">01</div><h3>Choose Treatment</h3><p>Browse our library, use the body map, or take the self-assessment quiz.</p></div><div class="how-step"><div class="how-num">02</div><h3>Book Appointment</h3><p>Pick your date and time, fill in details, and submit your request.</p></div><div class="how-step"><div class="how-num">03</div><h3>Start Recovery</h3><p>Visit us and begin your personalized recovery with expert therapists.</p></div></div></section>
+<section class="quiz"><div class="quiz-box"><div><h2>Not Sure Which Treatment Is Right?</h2><p>Take our 2-minute self-assessment quiz. Answer 10 simple questions and get personalized treatment recommendations.</p><a href="#" class="btn-white">Take the Quiz &rarr;</a></div><div class="quiz-cards"><div class="quiz-q"><div class="num">Q1</div><div class="txt">Where does it hurt?</div></div><div class="quiz-q"><div class="num">Q2</div><div class="txt">How long?</div></div><div class="quiz-q"><div class="num">Q3</div><div class="txt">Pain type?</div></div><div class="quiz-q"><div class="num">Q4</div><div class="txt">Your goal?</div></div></div></div></section>
+<section class="testimonials"><div class="section-header"><h2>What Our <span class="acc">Patients</span> Say</h2><p>Real stories from real patients.</p></div><div class="test-card"><div class="stars">★★★★★</div><blockquote>"After my ACL surgery, I was worried about getting back to football. The team at S4Spine got me back on the field in 6 months. Truly grateful!"</blockquote><div class="author">Rahul Sharma</div><div class="treatment">ACL Recovery</div></div></section>
+<section class="faq"><div class="section-header"><h2>Frequently Asked <span class="acc">Questions</span></h2></div><div class="faq-list"><div class="faq-item"><h4>What conditions does physiotherapy treat?</h4><p>We treat back pain, sports injuries, post-surgical recovery, neurological conditions, arthritis, sciatica, frozen shoulder, and 40+ more.</p></div><div class="faq-item"><h4>Do I need a doctor's referral?</h4><p>No referral needed. Book directly with us. Bring medical reports if you have any.</p></div><div class="faq-item"><h4>How many sessions will I need?</h4><p>Varies by condition. Most patients see improvement within 8-16 sessions.</p></div></div></section>
+<section class="contact-cta"><div class="contact-box"><div><h2>Ready to Start Your Recovery?</h2><p>Get in touch today. Our team is here to help you take the first step towards a pain-free life.</p><div class="contact-btns"><a href="#" style="background:#fff;color:#E8782A;padding:14px 32px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none">Book Appointment</a><a href="#" style="border:2px solid rgba(255,255,255,.4);color:#fff;padding:14px 32px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none">Get in Touch</a></div></div><div class="contact-info"><div class="contact-row"><div class="contact-icon">📍</div><div><strong>Visit Us</strong><br>Clinic Address, City</div></div><div class="contact-row"><div class="contact-icon">📞</div><div><strong>Call Us</strong><br>+91 98765 43210</div></div><div class="contact-row"><div class="contact-icon">💬</div><div><strong>WhatsApp</strong><br>Chat with us</div></div><div class="contact-row"><div class="contact-icon">🕐</div><div><strong>Hours</strong><br>Mon-Sat 9AM-7PM</div></div></div></div></section>
+<footer><div class="footer-inner"><div class="footer-brand"><div class="name"><b>S4</b>Spine</div><p>Expert physiotherapy treatments for pain relief, rehabilitation, and recovery.</p></div><div><h4>Quick Links</h4><ul><li><a href="#">Treatments</a></li><li><a href="#">Body Map</a></li><li><a href="#">Self-Assessment</a></li><li><a href="#">Book Appointment</a></li></ul></div><div><h4>Support</h4><ul><li><a href="#">FAQ</a></li><li><a href="#">Contact Us</a></li><li><a href="#">Accessibility</a></li></ul></div><div><h4>Contact</h4><ul><li><a href="#">+91 98765 43210</a></li><li><a href="#">WhatsApp Us</a></li><li>Mon-Sat: 9AM-7PM</li></ul></div></div><div class="footer-bottom"><p>&copy; 2026 S4Spine Physiotherapy Clinic</p><p>Designed with care for your recovery.</p></div></footer>
+</body>
+</html>
