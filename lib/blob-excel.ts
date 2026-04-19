@@ -157,11 +157,22 @@ export async function getNextId(filename: string, prefix: string): Promise<strin
 
 export async function downloadExcelBuffer(filename: string): Promise<Buffer | null> {
   if (useBlob) {
-    const url = await blobFindUrl(filename);
-    if (!url) return null;
-    const { head } = await import("@vercel/blob");
-    const blobInfo = await head(url);
-    const response = await fetch(blobInfo.downloadUrl);
+    const blob = await import("@vercel/blob");
+    const blobPath = `data/${filename}`;
+    const { blobs } = await blob.list({ prefix: blobPath });
+    const match = blobs.find((b) => b.pathname === blobPath || b.pathname.startsWith(blobPath));
+    if (!match) return null;
+
+    const token = process.env.BLOB_READ_WRITE_TOKEN!;
+    const response = await fetch(match.url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!response.ok) {
+      const blobInfo = await blob.head(match.url);
+      const dlResponse = await fetch(blobInfo.downloadUrl);
+      const arrayBuffer = await dlResponse.arrayBuffer();
+      return Buffer.from(arrayBuffer);
+    }
     const arrayBuffer = await response.arrayBuffer();
     return Buffer.from(arrayBuffer);
   }
