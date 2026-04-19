@@ -22,16 +22,29 @@ async function blobFindUrl(filename: string): Promise<string | null> {
   const { list } = await import("@vercel/blob");
   const blobPath = `data/${filename}`;
   const { blobs } = await list({ prefix: blobPath });
-  const match = blobs.find((b) => b.pathname === blobPath);
+  const match = blobs.find((b) => b.pathname === blobPath || b.pathname.startsWith(blobPath));
   return match?.url ?? null;
 }
 
 async function blobRead<T>(filename: string): Promise<T[]> {
-  const url = await blobFindUrl(filename);
-  if (!url) return [];
-  const { head } = await import("@vercel/blob");
-  const blobInfo = await head(url);
-  const response = await fetch(blobInfo.downloadUrl);
+  const blob = await import("@vercel/blob");
+  const blobPath = `data/${filename}`;
+  const { blobs } = await blob.list({ prefix: blobPath });
+  const match = blobs.find((b) => b.pathname === blobPath || b.pathname.startsWith(blobPath));
+  if (!match) return [];
+
+  const token = process.env.BLOB_READ_WRITE_TOKEN!;
+  const response = await fetch(match.url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) {
+    const blobInfo = await blob.head(match.url);
+    const dlResponse = await fetch(blobInfo.downloadUrl);
+    const buffer = await dlResponse.arrayBuffer();
+    const workbook = XLSX.read(buffer, { type: "array" });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    return XLSX.utils.sheet_to_json<T>(sheet);
+  }
   const buffer = await response.arrayBuffer();
   const workbook = XLSX.read(buffer, { type: "array" });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -53,6 +66,13 @@ async function blobWrite<T>(filename: string, rows: T[]): Promise<void> {
     contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     addRandomSuffix: false,
   });
+}
+
+export async function debugBlobList(): Promise<unknown> {
+  if (!useBlob) return { mode: "local" };
+  const { list } = await import("@vercel/blob");
+  const { blobs } = await list();
+  return { mode: "blob", count: blobs.length, files: blobs.map((b) => ({ pathname: b.pathname, url: b.url.slice(0, 60) + "..." })) };
 }
 
 // --- Local file helpers ---
