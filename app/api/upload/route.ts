@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
       const { put } = await import("@vercel/blob");
       const buffer = Buffer.from(await file.arrayBuffer());
       const blob = await put(`uploads/${filename}`, buffer, {
-        access: "public",
+        access: "private",
         contentType: file.type || "video/mp4",
       });
       url = blob.url;

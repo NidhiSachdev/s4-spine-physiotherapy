@@ -29,7 +29,9 @@ async function blobFindUrl(filename: string): Promise<string | null> {
 async function blobRead<T>(filename: string): Promise<T[]> {
   const url = await blobFindUrl(filename);
   if (!url) return [];
-  const response = await fetch(url);
+  const { head } = await import("@vercel/blob");
+  const blobInfo = await head(url);
+  const response = await fetch(blobInfo.downloadUrl);
   const buffer = await response.arrayBuffer();
   const workbook = XLSX.read(buffer, { type: "array" });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -47,8 +49,9 @@ async function blobWrite<T>(filename: string, rows: T[]): Promise<void> {
   if (existingUrl) await del(existingUrl);
 
   await put(`data/${filename}`, buffer, {
-    access: "public",
+    access: "private",
     contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    addRandomSuffix: false,
   });
 }
 
@@ -136,7 +139,9 @@ export async function downloadExcelBuffer(filename: string): Promise<Buffer | nu
   if (useBlob) {
     const url = await blobFindUrl(filename);
     if (!url) return null;
-    const response = await fetch(url);
+    const { head } = await import("@vercel/blob");
+    const blobInfo = await head(url);
+    const response = await fetch(blobInfo.downloadUrl);
     const arrayBuffer = await response.arrayBuffer();
     return Buffer.from(arrayBuffer);
   }
