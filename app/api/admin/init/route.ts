@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { hashPassword } from "@/lib/auth";
 import { readExcel, writeExcel } from "@/lib/blob-excel";
 
@@ -9,12 +9,16 @@ interface LoginRecord {
   "Last Login": string;
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const logins = await readExcel<LoginRecord>("logins.xlsx");
+    const { searchParams } = new URL(request.url);
+    const reset = searchParams.get("reset") === "true";
 
-    if (logins.length > 0) {
-      return NextResponse.json({ message: "Already initialized" });
+    if (!reset) {
+      const logins = await readExcel<LoginRecord>("logins.xlsx");
+      if (logins.length > 0) {
+        return NextResponse.json({ message: "Already initialized" });
+      }
     }
 
     const hashedPassword = await hashPassword("admin123");
@@ -28,7 +32,8 @@ export async function GET() {
     await writeExcel("logins.xlsx", [defaultAdmin]);
     return NextResponse.json({
       success: true,
-      message: "Default admin created",
+      message: reset ? "Admin credentials reset" : "Default admin created",
+      credentials: { username: "admin", password: "admin123" },
     });
   } catch (error) {
     console.error("Init error:", error);
