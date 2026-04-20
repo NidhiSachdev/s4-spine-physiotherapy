@@ -7,7 +7,7 @@ export default function ContactCTA() {
   const phone = process.env.NEXT_PUBLIC_PHONE || "+917900177857";
   const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP || "917900177857";
   const address = process.env.NEXT_PUBLIC_ADDRESS || "Shop No 8, Vishwas CHS, Patel Chowk, RB Mehta Marg, Shival Nagar, Saibaba Nagar, Pant Nagar, Ghatkopar East, Mumbai, Maharashtra 400077";
-  const hours = process.env.NEXT_PUBLIC_WORKING_HOURS || "Mon - Sat: 9:00 AM - 7:00 PM";
+  const hours = process.env.NEXT_PUBLIC_WORKING_HOURS || "Mon - Fri: 8:00 AM - 8:00 PM | Sat: 8:00 AM - 2:00 PM";
 
   return (
     <section className="py-16 lg:py-20 bg-background">

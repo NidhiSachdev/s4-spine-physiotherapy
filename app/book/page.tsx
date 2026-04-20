@@ -21,9 +21,9 @@ const treatments = treatmentsData as Treatment[];
 const STEP_LABELS = ["Treatment", "Date", "Time", "Details", "Review"];
 
 const TIME_SLOTS = [
-  { id: "morning", label: "Morning", range: "9:00 AM - 12:00 PM", icon: "sun" },
+  { id: "morning", label: "Morning", range: "8:00 AM - 12:00 PM", icon: "sun" },
   { id: "afternoon", label: "Afternoon", range: "12:00 PM - 4:00 PM", icon: "sun" },
-  { id: "evening", label: "Evening", range: "4:00 PM - 7:00 PM", icon: "moon" },
+  { id: "evening", label: "Evening", range: "4:00 PM - 8:00 PM", icon: "moon" },
 ];
 
 interface SlotAvailability {

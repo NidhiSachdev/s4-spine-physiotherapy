@@ -106,7 +106,7 @@ export default function Footer() {
                   s4spineclinic@gmail.com
                 </a>
               </p>
-              <p>Mon - Sat: 9:00 AM - 7:00 PM</p>
+              <p>Mon - Fri: 8:00 AM - 8:00 PM | Sat: 8:00 AM - 2:00 PM</p>
             </div>
             <div className="flex gap-3 mt-4">
               <a
