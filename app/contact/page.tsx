@@ -14,8 +14,7 @@ const SUBJECT_OPTIONS = [
 ];
 
 const WORKING_HOURS = [
-  { day: "Monday - Friday", hours: "8:00 AM - 8:00 PM" },
-  { day: "Saturday", hours: "8:00 AM - 2:00 PM" },
+  { day: "Monday - Saturday", hours: "8:00 AM - 8:00 PM" },
   { day: "Sunday", hours: "Closed" },
 ];
 
@@ -343,7 +342,7 @@ export default function ContactPage() {
                     +91 79001 77857
                   </a>
                   <p className="text-muted text-sm mt-1">
-                    Mon - Fri: 8:00 AM - 8:00 PM | Sat: 8:00 AM - 2:00 PM
+                    Mon - Sat: 8:00 AM - 8:00 PM
                   </p>
                 </div>
               </div>
