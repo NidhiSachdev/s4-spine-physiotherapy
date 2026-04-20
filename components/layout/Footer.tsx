@@ -137,7 +137,7 @@ export default function Footer() {
 
         <div className="mt-10 pt-6 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <p>&copy; {new Date().getFullYear()} S4 Spine Physiotherapy Clinic. All rights reserved.</p>
-          <p>Designed by Niddhi Sachdeo (NS)</p>
+          <p>Designed by Niddhi Sachdeo (CodeCraft Studio)</p>
         </div>
       </div>
     </footer>
