@@ -3,6 +3,7 @@ import TrustBar from "@/components/home/TrustBar";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import AnimatedCounters from "@/components/home/AnimatedCounters";
 import CategoryCards from "@/components/home/CategoryCards";
+import DiagnosticTests from "@/components/home/DiagnosticTests";
 import HowItWorks from "@/components/home/HowItWorks";
 import QuizCTA from "@/components/home/QuizCTA";
 import TestimonialsCarousel from "@/components/home/TestimonialsCarousel";
@@ -17,6 +18,7 @@ export default function Home() {
       <WhyChooseUs />
       <AnimatedCounters />
       <CategoryCards />
+      <DiagnosticTests />
       <HowItWorks />
       <QuizCTA />
       <TestimonialsCarousel />
