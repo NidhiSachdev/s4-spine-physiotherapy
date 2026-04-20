@@ -62,7 +62,7 @@ function FlipCard({ cat, i }: { cat: typeof categories[number]; i: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: i * 0.05, duration: 0.4 }}
-      className="group [perspective:1000px] h-56 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+      className="group [perspective:1000px] h-56 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] cursor-pointer"
       onClick={() => setFlipped((f) => !f)}
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
@@ -152,9 +152,24 @@ export default function CategoryCards() {
           </p>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
+        {/* Desktop: wrapped grid */}
+        <div className="hidden sm:flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
           {categories.map((cat, i) => (
             <FlipCard key={cat.slug} cat={cat} i={i} />
+          ))}
+        </div>
+
+        {/* Mobile: horizontal carousel */}
+        <div className="sm:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
+          {categories.map((cat, i) => (
+            <div key={cat.slug} className="snap-center shrink-0 w-[75vw]">
+              <FlipCard cat={cat} i={i} />
+            </div>
+          ))}
+        </div>
+        <div className="sm:hidden flex justify-center gap-1.5 mt-3">
+          {categories.map((_, i) => (
+            <div key={i} className="w-2 h-2 rounded-full bg-orange/30" />
           ))}
         </div>
       </div>

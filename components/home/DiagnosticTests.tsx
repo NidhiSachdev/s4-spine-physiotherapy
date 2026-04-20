@@ -26,6 +26,30 @@ const tests = [
   },
 ];
 
+function TestCard({ test, idx }: { test: typeof tests[number]; idx: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: idx * 0.1 }}
+      className="bg-card rounded-xl border border-border p-6 hover:shadow-lg hover:border-orange/30 transition-all duration-300 group h-full"
+    >
+      <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-cream text-orange mb-4 group-hover:bg-orange group-hover:text-white transition-colors">
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={test.icon} />
+        </svg>
+      </div>
+      <h3 className="font-heading font-semibold text-charcoal mb-2 group-hover:text-orange transition-colors">
+        {test.title}
+      </h3>
+      <p className="text-muted text-sm leading-relaxed">
+        {test.description}
+      </p>
+    </motion.div>
+  );
+}
+
 export default function DiagnosticTests() {
   return (
     <section className="py-16 lg:py-20 bg-background">
@@ -49,28 +73,24 @@ export default function DiagnosticTests() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Desktop: grid */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {tests.map((test, idx) => (
-            <motion.div
-              key={test.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="bg-card rounded-xl border border-border p-6 hover:shadow-lg hover:border-orange/30 transition-all duration-300 group"
-            >
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-cream text-orange mb-4 group-hover:bg-orange group-hover:text-white transition-colors">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={test.icon} />
-                </svg>
-              </div>
-              <h3 className="font-heading font-semibold text-charcoal mb-2 group-hover:text-orange transition-colors">
-                {test.title}
-              </h3>
-              <p className="text-muted text-sm leading-relaxed">
-                {test.description}
-              </p>
-            </motion.div>
+            <TestCard key={test.title} test={test} idx={idx} />
+          ))}
+        </div>
+
+        {/* Mobile: horizontal carousel */}
+        <div className="sm:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
+          {tests.map((test, idx) => (
+            <div key={test.title} className="snap-center shrink-0 w-[75vw]">
+              <TestCard test={test} idx={idx} />
+            </div>
+          ))}
+        </div>
+        <div className="sm:hidden flex justify-center gap-1.5 mt-3">
+          {tests.map((_, i) => (
+            <div key={i} className="w-2 h-2 rounded-full bg-orange/30" />
           ))}
         </div>
 

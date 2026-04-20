@@ -33,6 +33,39 @@ const reasons = [
   },
 ];
 
+function ReasonCard({ reason, i }: { reason: typeof reasons[number]; i: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: i * 0.1, duration: 0.5 }}
+      whileHover={{ y: -8, boxShadow: "0 20px 25px -5px rgba(0,0,0,0.08)" }}
+      whileTap={{ y: -8, boxShadow: "0 20px 25px -5px rgba(0,0,0,0.08)" }}
+      className="group active:group relative overflow-hidden bg-white rounded-xl border border-border p-6 transition-all duration-300 h-full"
+    >
+      <div className="absolute -top-3 -right-2 text-7xl font-heading font-bold text-orange/[0.05] select-none transition-all duration-300 group-hover:text-orange/[0.12] group-hover:scale-110 group-active:text-orange/[0.12] group-active:scale-110">
+        {reason.number}
+      </div>
+      <div className="absolute top-0 left-0 w-1 h-0 bg-orange rounded-r transition-all duration-500 group-hover:h-full group-active:h-full" />
+      <div className="absolute bottom-0 left-0 w-0 h-[3px] bg-orange transition-all duration-500 group-hover:w-full group-active:w-full" />
+      <div className="relative">
+        <div className="w-12 h-12 bg-orange/10 text-orange rounded-xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110 group-hover:bg-orange group-hover:text-white group-hover:shadow-lg group-hover:shadow-orange/20 group-active:scale-110 group-active:bg-orange group-active:text-white group-active:shadow-lg group-active:shadow-orange/20">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={reason.icon} />
+          </svg>
+        </div>
+        <h3 className="font-heading font-semibold text-charcoal text-base mb-2 transition-colors duration-300 group-hover:text-orange group-active:text-orange">
+          {reason.title}
+        </h3>
+        <p className="text-muted text-sm leading-relaxed">
+          {reason.description}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function WhyChooseUs() {
   return (
     <section className="py-16 lg:py-20 bg-white">
@@ -52,53 +85,24 @@ export default function WhyChooseUs() {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Desktop: grid */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {reasons.map((reason, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              whileHover={{ y: -8, boxShadow: "0 20px 25px -5px rgba(0,0,0,0.08)" }}
-              whileTap={{ y: -8, boxShadow: "0 20px 25px -5px rgba(0,0,0,0.08)" }}
-              className="group active:group relative overflow-hidden bg-white rounded-xl border border-border p-6 transition-all duration-300"
-            >
-              {/* Faded number in background */}
-              <div className="absolute -top-3 -right-2 text-7xl font-heading font-bold text-orange/[0.05] select-none transition-all duration-300 group-hover:text-orange/[0.12] group-hover:scale-110 group-active:text-orange/[0.12] group-active:scale-110">
-                {reason.number}
-              </div>
+            <ReasonCard key={i} reason={reason} i={i} />
+          ))}
+        </div>
 
-              {/* Left accent bar that grows on hover/tap */}
-              <div className="absolute top-0 left-0 w-1 h-0 bg-orange rounded-r transition-all duration-500 group-hover:h-full group-active:h-full" />
-
-              {/* Bottom border that appears on hover/tap */}
-              <div className="absolute bottom-0 left-0 w-0 h-[3px] bg-orange transition-all duration-500 group-hover:w-full group-active:w-full" />
-
-              <div className="relative">
-                <div className="w-12 h-12 bg-orange/10 text-orange rounded-xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110 group-hover:bg-orange group-hover:text-white group-hover:shadow-lg group-hover:shadow-orange/20 group-active:scale-110 group-active:bg-orange group-active:text-white group-active:shadow-lg group-active:shadow-orange/20">
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d={reason.icon}
-                    />
-                  </svg>
-                </div>
-                <h3 className="font-heading font-semibold text-charcoal text-base mb-2 transition-colors duration-300 group-hover:text-orange group-active:text-orange">
-                  {reason.title}
-                </h3>
-                <p className="text-muted text-sm leading-relaxed">
-                  {reason.description}
-                </p>
-              </div>
-            </motion.div>
+        {/* Mobile: horizontal carousel */}
+        <div className="sm:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
+          {reasons.map((reason, i) => (
+            <div key={i} className="snap-center shrink-0 w-[80vw]">
+              <ReasonCard reason={reason} i={i} />
+            </div>
+          ))}
+        </div>
+        <div className="sm:hidden flex justify-center gap-1.5 mt-3">
+          {reasons.map((_, i) => (
+            <div key={i} className="w-2 h-2 rounded-full bg-orange/30" />
           ))}
         </div>
       </div>

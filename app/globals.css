@@ -156,3 +156,11 @@
 .animate-confetti-fall {
   animation: confettiFall 2s ease-in forwards;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
