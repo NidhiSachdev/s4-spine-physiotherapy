@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import MobileCarousel from "@/components/ui/MobileCarousel";
 
 const tests = [
   {
@@ -80,19 +81,12 @@ export default function DiagnosticTests() {
           ))}
         </div>
 
-        {/* Mobile: horizontal carousel */}
-        <div className="sm:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
-          {tests.map((test, idx) => (
-            <div key={test.title} className="snap-center shrink-0 w-[75vw]">
-              <TestCard test={test} idx={idx} />
-            </div>
+        <MobileCarousel
+          items={tests.map((test, idx) => (
+            <TestCard key={test.title} test={test} idx={idx} />
           ))}
-        </div>
-        <div className="sm:hidden flex justify-center gap-1.5 mt-3">
-          {tests.map((_, i) => (
-            <div key={i} className="w-2 h-2 rounded-full bg-orange/30" />
-          ))}
-        </div>
+          itemWidth="75vw"
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}

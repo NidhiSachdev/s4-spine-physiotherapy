@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import MobileCarousel from "@/components/ui/MobileCarousel";
 
 const categories = [
   {
@@ -159,19 +160,12 @@ export default function CategoryCards() {
           ))}
         </div>
 
-        {/* Mobile: horizontal carousel */}
-        <div className="sm:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
-          {categories.map((cat, i) => (
-            <div key={cat.slug} className="snap-center shrink-0 w-[75vw]">
-              <FlipCard cat={cat} i={i} />
-            </div>
+        <MobileCarousel
+          items={categories.map((cat, i) => (
+            <FlipCard key={cat.slug} cat={cat} i={i} />
           ))}
-        </div>
-        <div className="sm:hidden flex justify-center gap-1.5 mt-3">
-          {categories.map((_, i) => (
-            <div key={i} className="w-2 h-2 rounded-full bg-orange/30" />
-          ))}
-        </div>
+          itemWidth="75vw"
+        />
       </div>
     </section>
   );

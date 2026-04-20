@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import MobileCarousel from "@/components/ui/MobileCarousel";
 
 const reasons = [
   {
@@ -92,19 +93,12 @@ export default function WhyChooseUs() {
           ))}
         </div>
 
-        {/* Mobile: horizontal carousel */}
-        <div className="sm:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
-          {reasons.map((reason, i) => (
-            <div key={i} className="snap-center shrink-0 w-[80vw]">
-              <ReasonCard reason={reason} i={i} />
-            </div>
+        <MobileCarousel
+          items={reasons.map((reason, i) => (
+            <ReasonCard key={i} reason={reason} i={i} />
           ))}
-        </div>
-        <div className="sm:hidden flex justify-center gap-1.5 mt-3">
-          {reasons.map((_, i) => (
-            <div key={i} className="w-2 h-2 rounded-full bg-orange/30" />
-          ))}
-        </div>
+          itemWidth="80vw"
+        />
       </div>
     </section>
   );
