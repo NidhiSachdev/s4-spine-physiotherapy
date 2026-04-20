@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -51,6 +52,87 @@ const categories = [
   },
 ];
 
+function FlipCard({ cat, i }: { cat: typeof categories[number]; i: number }) {
+  const [flipped, setFlipped] = useState(false);
+
+  return (
+    <motion.div
+      key={cat.slug}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: i * 0.05, duration: 0.4 }}
+      className="group [perspective:1000px] h-56 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+      onClick={() => setFlipped((f) => !f)}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+    >
+      <div
+        className="relative w-full h-full transition-transform duration-500"
+        style={{
+          transformStyle: "preserve-3d",
+          WebkitTransformStyle: "preserve-3d",
+          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+        }}
+      >
+        {/* Front */}
+        <div
+          className="absolute inset-0 bg-card rounded-xl p-6 border border-border flex flex-col items-center justify-center text-center shadow-sm"
+          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+        >
+          <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4 ${cat.color}`}>
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={cat.icon} />
+            </svg>
+          </div>
+          <h3 className="font-heading font-semibold text-charcoal text-lg">
+            {cat.name}
+          </h3>
+          <p className="text-muted text-sm mt-2 leading-relaxed">
+            {cat.description}
+          </p>
+        </div>
+
+        {/* Back */}
+        <div
+          className={`absolute inset-0 bg-gradient-to-br ${cat.backGradient} rounded-xl p-5 flex flex-col justify-between text-white shadow-lg`}
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+          }}
+        >
+          <div>
+            <h3 className="font-heading font-bold text-base mb-3">
+              {cat.name}
+            </h3>
+            <ul className="space-y-1.5">
+              {cat.treatments.map((t) => (
+                <li key={t} className="flex items-center gap-2 text-sm text-white/90">
+                  <svg className="w-3.5 h-3.5 shrink-0 text-white/70" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Link
+            href={`/treatments/${cat.slug}`}
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center justify-center gap-2 w-full mt-3 px-4 py-2 bg-white/20 hover:bg-white/30 text-white text-sm font-semibold rounded-lg transition-colors backdrop-blur-sm"
+          >
+            View Treatments
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function CategoryCards() {
   return (
     <section className="py-16 lg:py-20 bg-warm-bg">
@@ -66,65 +148,13 @@ export default function CategoryCards() {
           </h2>
           <p className="text-muted max-w-2xl mx-auto">
             Browse our comprehensive range of physiotherapy specialties.
-            Hover over a card to see the treatments we offer.
+            Tap or hover over a card to see the treatments we offer.
           </p>
         </motion.div>
 
         <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
           {categories.map((cat, i) => (
-            <motion.div
-              key={cat.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05, duration: 0.4 }}
-              className="group [perspective:1000px] h-56 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
-            >
-              <div className="relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                {/* Front */}
-                <div className="absolute inset-0 [backface-visibility:hidden] bg-card rounded-xl p-6 border border-border flex flex-col items-center justify-center text-center shadow-sm">
-                  <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4 ${cat.color}`}>
-                    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={cat.icon} />
-                    </svg>
-                  </div>
-                  <h3 className="font-heading font-semibold text-charcoal text-lg">
-                    {cat.name}
-                  </h3>
-                  <p className="text-muted text-sm mt-2 leading-relaxed">
-                    {cat.description}
-                  </p>
-                </div>
-
-                {/* Back */}
-                <div className={`absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] bg-gradient-to-br ${cat.backGradient} rounded-xl p-5 flex flex-col justify-between text-white shadow-lg`}>
-                  <div>
-                    <h3 className="font-heading font-bold text-base mb-3">
-                      {cat.name}
-                    </h3>
-                    <ul className="space-y-1.5">
-                      {cat.treatments.map((t) => (
-                        <li key={t} className="flex items-center gap-2 text-sm text-white/90">
-                          <svg className="w-3.5 h-3.5 shrink-0 text-white/70" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                          {t}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <Link
-                    href={`/treatments/${cat.slug}`}
-                    className="inline-flex items-center justify-center gap-2 w-full mt-3 px-4 py-2 bg-white/20 hover:bg-white/30 text-white text-sm font-semibold rounded-lg transition-colors backdrop-blur-sm"
-                  >
-                    View Treatments
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
+            <FlipCard key={cat.slug} cat={cat} i={i} />
           ))}
         </div>
       </div>
