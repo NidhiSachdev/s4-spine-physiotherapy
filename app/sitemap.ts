@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import treatmentsData from "@/data/treatments.json";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://s4spine.com";
+  const baseUrl = "https://www.s4spine.com";
 
   const staticPages = [
     {

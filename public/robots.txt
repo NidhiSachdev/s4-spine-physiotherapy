@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api
 
-Sitemap: https://s4spine.com/sitemap.xml
+Sitemap: https://www.s4spine.com/sitemap.xml
