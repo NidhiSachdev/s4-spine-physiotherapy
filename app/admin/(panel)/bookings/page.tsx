@@ -14,6 +14,9 @@ interface Booking {
   "Condition Notes"?: string;
   Status: string;
   "Submitted At": string;
+  "Package ID"?: string;
+  Session?: string;
+  Frequency?: string;
 }
 
 const STATUS_OPTIONS = ["Pending", "Confirmed", "Completed", "Cancelled"] as const;
@@ -68,7 +71,8 @@ export default function BookingsPage() {
       result = result.filter(
         (b) =>
           String(b.Name).toLowerCase().includes(q) ||
-          String(b.Phone).toLowerCase().includes(q)
+          String(b.Phone).toLowerCase().includes(q) ||
+          (b["Package ID"] && String(b["Package ID"]).toLowerCase().includes(q))
       );
     }
 
@@ -80,6 +84,10 @@ export default function BookingsPage() {
     const start = (currentPage - 1) * ROWS_PER_PAGE;
     return filteredBookings.slice(start, start + ROWS_PER_PAGE);
   }, [filteredBookings, currentPage]);
+
+  const getPackageSiblings = (pkgId: string): Booking[] => {
+    return bookings.filter((b) => b["Package ID"] === pkgId);
+  };
 
   const handleRowClick = (id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
@@ -157,7 +165,7 @@ export default function BookingsPage() {
         </div>
         <input
           type="search"
-          placeholder="Search by name or phone..."
+          placeholder="Search by name, phone, or package ID..."
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
@@ -192,23 +200,25 @@ export default function BookingsPage() {
               </p>
             </div>
           ) : (
-            <table className="w-full min-w-[800px]">
+            <table className="w-full min-w-[900px]">
               <thead>
                 <tr className="bg-warm-bg font-medium text-charcoal text-sm">
                   <th className="w-8 px-4 py-3" />
                   <th className="text-left px-6 py-3">ID</th>
                   <th className="text-left px-6 py-3">Name</th>
-                  <th className="text-left px-6 py-3">Phone</th>
                   <th className="text-left px-6 py-3">Treatment</th>
                   <th className="text-left px-6 py-3">Date</th>
                   <th className="text-left px-6 py-3">Time</th>
+                  <th className="text-left px-6 py-3">Package</th>
                   <th className="text-left px-6 py-3">Status</th>
-                  <th className="text-left px-6 py-3">Submitted</th>
                 </tr>
               </thead>
               <tbody>
                 {paginatedBookings.map((b) => {
                   const isExpanded = expandedId === b.ID;
+                  const isPackage = !!b["Package ID"];
+                  const siblings = isPackage ? getPackageSiblings(b["Package ID"]!) : [];
+
                   return (
                     <React.Fragment key={b.ID}>
                       <tr
@@ -231,13 +241,24 @@ export default function BookingsPage() {
                         </td>
                         <td className="px-6 py-4 text-body">{b.ID}</td>
                         <td className="px-6 py-4 text-body">{b.Name}</td>
-                        <td className="px-6 py-4 text-body">{b.Phone}</td>
                         <td className="px-6 py-4 text-body">{b.Treatment}</td>
                         <td className="px-6 py-4 text-body">
                           {formatDate(b["Preferred Date"])}
                         </td>
                         <td className="px-6 py-4 text-body">
                           {b["Preferred Time"] || "—"}
+                        </td>
+                        <td className="px-6 py-4">
+                          {isPackage ? (
+                            <div className="flex flex-col gap-1">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-orange/10 text-orange w-fit">
+                                {b["Package ID"]}
+                              </span>
+                              <span className="text-xs text-muted">{b.Session}</span>
+                            </div>
+                          ) : (
+                            <span className="text-xs text-muted">Single</span>
+                          )}
                         </td>
                         <td className="px-6 py-4">
                           <span
@@ -250,32 +271,75 @@ export default function BookingsPage() {
                             {b.Status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 text-body text-sm">
-                          {formatDateTime(b["Submitted At"])}
-                        </td>
                       </tr>
                       {isExpanded && (
                         <tr className="bg-cream/30">
-                          <td colSpan={9} className="px-6 py-4">
+                          <td colSpan={8} className="px-6 py-4">
                             <div className="space-y-4">
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div>
-                                  <p className="text-xs font-medium text-muted uppercase mb-1">
-                                    Condition Notes
-                                  </p>
-                                  <p className="text-body">
-                                    {b["Condition Notes"] || "—"}
-                                  </p>
+                                  <p className="text-xs font-medium text-muted uppercase mb-1">Phone</p>
+                                  <p className="text-body">{b.Phone}</p>
                                 </div>
                                 <div>
-                                  <p className="text-xs font-medium text-muted uppercase mb-1">
-                                    Age
-                                  </p>
-                                  <p className="text-body">
-                                    {b.Age != null ? b.Age : "—"}
-                                  </p>
+                                  <p className="text-xs font-medium text-muted uppercase mb-1">Age</p>
+                                  <p className="text-body">{b.Age != null ? b.Age : "—"}</p>
+                                </div>
+                                <div>
+                                  <p className="text-xs font-medium text-muted uppercase mb-1">Submitted</p>
+                                  <p className="text-body text-sm">{formatDateTime(b["Submitted At"])}</p>
                                 </div>
                               </div>
+                              <div>
+                                <p className="text-xs font-medium text-muted uppercase mb-1">Condition Notes</p>
+                                <p className="text-body">{b["Condition Notes"] || "—"}</p>
+                              </div>
+
+                              {isPackage && siblings.length > 1 && (
+                                <div>
+                                  <p className="text-xs font-medium text-muted uppercase mb-2">
+                                    Package Sessions ({b["Package ID"]} — {b.Frequency})
+                                  </p>
+                                  <div className="rounded-lg border border-border overflow-hidden">
+                                    <table className="w-full text-sm">
+                                      <thead>
+                                        <tr className="bg-warm-bg text-xs text-muted uppercase">
+                                          <th className="text-left px-4 py-2">Session</th>
+                                          <th className="text-left px-4 py-2">Date</th>
+                                          <th className="text-left px-4 py-2">Time</th>
+                                          <th className="text-left px-4 py-2">Status</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {siblings.map((s) => (
+                                          <tr
+                                            key={s.ID}
+                                            className={cn(
+                                              "border-t border-border",
+                                              s.ID === b.ID && "bg-orange/5"
+                                            )}
+                                          >
+                                            <td className="px-4 py-2 text-body">{s.Session || "—"}</td>
+                                            <td className="px-4 py-2 text-body">{formatDate(s["Preferred Date"])}</td>
+                                            <td className="px-4 py-2 text-body">{s["Preferred Time"]}</td>
+                                            <td className="px-4 py-2">
+                                              <span
+                                                className={cn(
+                                                  "inline-flex px-2 py-0.5 rounded-full text-xs font-medium",
+                                                  STATUS_BADGE_CLASSES[s.Status] ?? "bg-muted/10 text-muted"
+                                                )}
+                                              >
+                                                {s.Status}
+                                              </span>
+                                            </td>
+                                          </tr>
+                                        ))}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              )}
+
                               <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-border">
                                 <select
                                   value={selectedStatus[b.ID] ?? b.Status}

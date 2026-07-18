@@ -8,17 +8,24 @@ import Breadcrumb from "@/components/layout/Breadcrumb";
 import Confetti from "@/components/ui/Confetti";
 import treatmentsData from "@/data/treatments.json";
 import { formatDate } from "@/lib/utils";
+import {
+  generateSessionDates,
+  parseSessionOptions,
+  FREQUENCY_OPTIONS,
+  type Frequency,
+} from "@/lib/schedule";
 
 interface Treatment {
   name: string;
   slug: string;
   category: string;
   categoryName: string;
+  sessions: string;
 }
 
 const treatments = treatmentsData as Treatment[];
 
-const STEP_LABELS = ["Treatment", "Date", "Time", "Details", "Review"];
+const STEP_LABELS = ["Treatment", "Sessions", "Date", "Time", "Details", "Review"];
 
 const TIME_SLOTS = [
   { id: "morning", label: "Morning", range: "8:00 AM - 12:00 PM", icon: "sun" },
@@ -71,6 +78,8 @@ function BookPageContent() {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState(0);
   const [treatment, setTreatment] = useState<Treatment | null>(null);
+  const [packageSize, setPackageSize] = useState<number>(1);
+  const [frequency, setFrequency] = useState<Frequency>("Twice a Week");
   const [date, setDate] = useState<{ year: number; month: number; day: number } | null>(null);
   const [timeSlot, setTimeSlot] = useState<string | null>(null);
   const [name, setName] = useState("");
@@ -78,6 +87,7 @@ function BookPageContent() {
   const [age, setAge] = useState("");
   const [notes, setNotes] = useState("");
   const [bookingId, setBookingId] = useState<string | null>(null);
+  const [packageId, setPackageId] = useState<string | null>(null);
   const [assignedTime, setAssignedTime] = useState<string | null>(null);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -94,6 +104,17 @@ function BookPageContent() {
     const now = new Date();
     return { year: now.getFullYear(), month: now.getMonth() };
   });
+
+  const sessionOptions = useMemo(() => {
+    if (!treatment?.sessions) return [];
+    return parseSessionOptions(treatment.sessions);
+  }, [treatment]);
+
+  const sessionDates = useMemo(() => {
+    if (!date || packageSize <= 1) return [];
+    const dateStr = `${date.year}-${String(date.month + 1).padStart(2, "0")}-${String(date.day).padStart(2, "0")}`;
+    return generateSessionDates(dateStr, packageSize, frequency);
+  }, [date, packageSize, frequency]);
 
   useEffect(() => {
     if (treatmentSlug && treatments.length) {
@@ -144,9 +165,10 @@ function BookPageContent() {
   };
 
   const canProceedStep1 = !!treatment;
-  const canProceedStep2 = !!date;
-  const canProceedStep3 = !!timeSlot && !(slotAvailability?.[TIME_SLOTS.find((s) => s.id === timeSlot)?.label || ""]?.full);
-  const canProceedStep4 = (() => {
+  const canProceedStep2 = packageSize >= 1;
+  const canProceedStep3 = !!date;
+  const canProceedStep4 = !!timeSlot && !(slotAvailability?.[TIME_SLOTS.find((s) => s.id === timeSlot)?.label || ""]?.full);
+  const canProceedStep5 = (() => {
     if (!name.trim()) return false;
     if (!phone.trim()) return false;
     const digits = phone.replace(/\D/g, "");
@@ -154,7 +176,7 @@ function BookPageContent() {
     return true;
   })();
 
-  const validateStep4 = () => {
+  const validateStep5 = () => {
     let ok = true;
     if (!name.trim()) {
       setNameError("Name is required");
@@ -192,13 +214,16 @@ function BookPageContent() {
           phone: digits,
           age: age ? Number(age) : undefined,
           notes: notes.trim() || undefined,
+          packageSize: packageSize > 1 ? packageSize : undefined,
+          frequency: packageSize > 1 ? frequency : undefined,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to submit");
       setBookingId(data.bookingId);
+      setPackageId(data.packageId || null);
       setAssignedTime(data.assignedTime || null);
-      setStep(6);
+      setStep(7);
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -207,7 +232,7 @@ function BookPageContent() {
   };
 
   const goToStep = (s: number) => {
-    if (s >= 1 && s <= 6 && (s < 6 || step === 6)) {
+    if (s >= 1 && s <= 7 && (s < 7 || step === 7)) {
       setDirection(s > step ? 1 : -1);
       setStep(s);
     }
@@ -226,6 +251,8 @@ function BookPageContent() {
   const resetForm = () => {
     setStep(1);
     setTreatment(null);
+    setPackageSize(1);
+    setFrequency("Twice a Week");
     setDate(null);
     setTimeSlot(null);
     setName("");
@@ -233,6 +260,7 @@ function BookPageContent() {
     setAge("");
     setNotes("");
     setBookingId(null);
+    setPackageId(null);
     setAssignedTime(null);
     setSlotAvailability(null);
     setSubmitError(null);
@@ -265,7 +293,7 @@ function BookPageContent() {
           Book Appointment
         </h1>
 
-        {step < 6 && (
+        {step < 7 && (
           <div className="mb-10">
             <div className="flex items-center justify-between">
               {STEP_LABELS.map((label, i) => {
@@ -300,7 +328,7 @@ function BookPageContent() {
                         {STEP_LABELS[i]}
                       </span>
                     </button>
-                    {i < 4 && (
+                    {i < STEP_LABELS.length - 1 && (
                       <div className="flex-1 h-0.5 mx-1 min-w-[8px] bg-border rounded">
                         <div
                           className={`h-full rounded transition-all ${completed ? "bg-orange" : "bg-border"}`}
@@ -316,6 +344,7 @@ function BookPageContent() {
         )}
 
         <AnimatePresence mode="wait">
+          {/* Step 1: Treatment */}
           {step === 1 && (
             <motion.div
               key="step1"
@@ -386,6 +415,7 @@ function BookPageContent() {
             </motion.div>
           )}
 
+          {/* Step 2: Session Plan */}
           {step === 2 && (
             <motion.div
               key="step2"
@@ -395,8 +425,105 @@ function BookPageContent() {
               exit="exit"
               className="space-y-6"
             >
+              <h2 className="text-lg font-semibold text-charcoal">Session Plan</h2>
+              <p className="text-muted text-sm">
+                Recommended: <span className="font-medium text-charcoal">{treatment?.sessions}</span> for {treatment?.name}
+              </p>
+
+              <div>
+                <label className="block text-sm font-medium text-charcoal mb-3">Number of Sessions</label>
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <button
+                    type="button"
+                    onClick={() => setPackageSize(1)}
+                    className={`p-4 rounded-xl border-2 text-left transition ${
+                      packageSize === 1
+                        ? "border-orange bg-cream"
+                        : "border-border hover:border-orange/50"
+                    }`}
+                  >
+                    <p className="font-semibold text-charcoal">Single Session</p>
+                    <p className="text-sm text-muted mt-1">Book one appointment</p>
+                  </button>
+                  {sessionOptions.map((count) => (
+                    <button
+                      key={count}
+                      type="button"
+                      onClick={() => setPackageSize(count)}
+                      className={`p-4 rounded-xl border-2 text-left transition ${
+                        packageSize === count
+                          ? "border-orange bg-cream"
+                          : "border-border hover:border-orange/50"
+                      }`}
+                    >
+                      <p className="font-semibold text-charcoal">{count} Sessions</p>
+                      <p className="text-sm text-muted mt-1">Package booking</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {packageSize > 1 && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <label className="block text-sm font-medium text-charcoal mb-3">Session Frequency</label>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {FREQUENCY_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        onClick={() => setFrequency(opt.id)}
+                        className={`p-4 rounded-xl border-2 text-left transition ${
+                          frequency === opt.id
+                            ? "border-orange bg-cream"
+                            : "border-border hover:border-orange/50"
+                        }`}
+                      >
+                        <p className="font-semibold text-charcoal">{opt.label}</p>
+                        <p className="text-sm text-muted mt-1">{opt.description}</p>
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              <div className="flex justify-between pt-4">
+                <button
+                  type="button"
+                  onClick={() => goBack(1)}
+                  className="px-4 py-2.5 rounded-lg border border-border text-body hover:bg-cream transition"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  onClick={() => goNext(3)}
+                  disabled={!canProceedStep2}
+                  className="px-6 py-2.5 rounded-lg bg-orange text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-orange-dark transition"
+                >
+                  Next
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 3: Date */}
+          {step === 3 && (
+            <motion.div
+              key="step3"
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="space-y-6"
+            >
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-charcoal">Select Date</h2>
+                <h2 className="text-lg font-semibold text-charcoal">
+                  {packageSize > 1 ? "Select First Session Date" : "Select Date"}
+                </h2>
                 <div className="flex gap-2">
                   <button
                     type="button"
@@ -441,7 +568,6 @@ function BookPageContent() {
                 {Array.from({ length: days }, (_, i) => {
                   const d = i + 1;
                   const past = isPastDate(calendarMonth.year, calendarMonth.month, d);
-                  const sun = isSunday(calendarMonth.year, calendarMonth.month, d);
                   const disabled = past;
                   const selected =
                     date?.year === calendarMonth.year &&
@@ -482,7 +608,7 @@ function BookPageContent() {
               <div className="flex justify-between pt-4">
                 <button
                   type="button"
-                  onClick={() => goBack(1)}
+                  onClick={() => goBack(2)}
                   className="px-4 py-2.5 rounded-lg border border-border text-body hover:bg-cream transition"
                 >
                   Back
@@ -494,9 +620,9 @@ function BookPageContent() {
                       setTimeSlot(null);
                       fetchAvailability(date);
                     }
-                    goNext(3);
+                    goNext(4);
                   }}
-                  disabled={!canProceedStep2}
+                  disabled={!canProceedStep3}
                   className="px-6 py-2.5 rounded-lg bg-orange text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-orange-dark transition"
                 >
                   Next
@@ -505,9 +631,10 @@ function BookPageContent() {
             </motion.div>
           )}
 
-          {step === 3 && (
+          {/* Step 4: Time */}
+          {step === 4 && (
             <motion.div
-              key="step3"
+              key="step4"
               variants={slideVariants}
               initial="enter"
               animate="center"
@@ -515,6 +642,9 @@ function BookPageContent() {
               className="space-y-6"
             >
               <h2 className="text-lg font-semibold text-charcoal">Select Time Slot</h2>
+              {packageSize > 1 && (
+                <p className="text-sm text-muted">All {packageSize} sessions will be booked in the same time slot.</p>
+              )}
               {availabilityLoading ? (
                 <div className="flex items-center justify-center py-12">
                   <svg className="animate-spin w-6 h-6 text-orange mr-3" fill="none" viewBox="0 0 24 24">
@@ -584,15 +714,15 @@ function BookPageContent() {
               <div className="flex justify-between pt-4">
                 <button
                   type="button"
-                  onClick={() => goBack(2)}
+                  onClick={() => goBack(3)}
                   className="px-4 py-2.5 rounded-lg border border-border text-body hover:bg-cream transition"
                 >
                   Back
                 </button>
                 <button
                   type="button"
-                  onClick={() => goNext(4)}
-                  disabled={!canProceedStep3}
+                  onClick={() => goNext(5)}
+                  disabled={!canProceedStep4}
                   className="px-6 py-2.5 rounded-lg bg-orange text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-orange-dark transition"
                 >
                   Next
@@ -601,9 +731,10 @@ function BookPageContent() {
             </motion.div>
           )}
 
-          {step === 4 && (
+          {/* Step 5: Details */}
+          {step === 5 && (
             <motion.div
-              key="step4"
+              key="step5"
               variants={slideVariants}
               initial="enter"
               animate="center"
@@ -671,7 +802,7 @@ function BookPageContent() {
               <div className="flex justify-between pt-4">
                 <button
                   type="button"
-                  onClick={() => goBack(3)}
+                  onClick={() => goBack(4)}
                   className="px-4 py-2.5 rounded-lg border border-border text-body hover:bg-cream transition"
                 >
                   Back
@@ -679,9 +810,9 @@ function BookPageContent() {
                 <button
                   type="button"
                   onClick={() => {
-                    if (validateStep4() && canProceedStep4) goNext(5);
+                    if (validateStep5() && canProceedStep5) goNext(6);
                   }}
-                  disabled={!canProceedStep4}
+                  disabled={!canProceedStep5}
                   className="px-6 py-2.5 rounded-lg bg-orange text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-orange-dark transition"
                 >
                   Next
@@ -690,9 +821,10 @@ function BookPageContent() {
             </motion.div>
           )}
 
-          {step === 5 && (
+          {/* Step 6: Review */}
+          {step === 6 && (
             <motion.div
-              key="step5"
+              key="step6"
               variants={slideVariants}
               initial="enter"
               animate="center"
@@ -706,26 +838,29 @@ function BookPageContent() {
                     <p className="text-xs text-muted uppercase">Treatment</p>
                     <p className="font-medium text-charcoal">{treatment?.name}</p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => goToStep(1)}
-                    className="text-sm text-orange hover:underline"
-                  >
+                  <button type="button" onClick={() => goToStep(1)} className="text-sm text-orange hover:underline">
                     Edit
                   </button>
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-xs text-muted uppercase">Date</p>
+                    <p className="text-xs text-muted uppercase">Session Plan</p>
+                    <p className="font-medium text-charcoal">
+                      {packageSize === 1 ? "Single Session" : `${packageSize} Sessions — ${frequency}`}
+                    </p>
+                  </div>
+                  <button type="button" onClick={() => goToStep(2)} className="text-sm text-orange hover:underline">
+                    Edit
+                  </button>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-muted uppercase">{packageSize > 1 ? "First Session Date" : "Date"}</p>
                     <p className="font-medium text-charcoal">
                       {date && formatDate(`${date.year}-${String(date.month + 1).padStart(2, "0")}-${String(date.day).padStart(2, "0")}`)}
                     </p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => goToStep(2)}
-                    className="text-sm text-orange hover:underline"
-                  >
+                  <button type="button" onClick={() => goToStep(3)} className="text-sm text-orange hover:underline">
                     Edit
                   </button>
                 </div>
@@ -745,7 +880,7 @@ function BookPageContent() {
                     type="button"
                     onClick={() => {
                       if (date) fetchAvailability(date);
-                      goToStep(3);
+                      goToStep(4);
                     }}
                     className="text-sm text-orange hover:underline"
                   >
@@ -757,11 +892,7 @@ function BookPageContent() {
                     <p className="text-xs text-muted uppercase">Name</p>
                     <p className="font-medium text-charcoal">{name}</p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => goToStep(4)}
-                    className="text-sm text-orange hover:underline"
-                  >
+                  <button type="button" onClick={() => goToStep(5)} className="text-sm text-orange hover:underline">
                     Edit
                   </button>
                 </div>
@@ -770,11 +901,7 @@ function BookPageContent() {
                     <p className="text-xs text-muted uppercase">Phone</p>
                     <p className="font-medium text-charcoal">{phone}</p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => goToStep(4)}
-                    className="text-sm text-orange hover:underline"
-                  >
+                  <button type="button" onClick={() => goToStep(5)} className="text-sm text-orange hover:underline">
                     Edit
                   </button>
                 </div>
@@ -784,11 +911,7 @@ function BookPageContent() {
                       <p className="text-xs text-muted uppercase">Age</p>
                       <p className="font-medium text-charcoal">{age}</p>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => goToStep(4)}
-                      className="text-sm text-orange hover:underline"
-                    >
+                    <button type="button" onClick={() => goToStep(5)} className="text-sm text-orange hover:underline">
                       Edit
                     </button>
                   </div>
@@ -799,16 +922,45 @@ function BookPageContent() {
                       <p className="text-xs text-muted uppercase">Condition Notes</p>
                       <p className="font-medium text-charcoal">{notes}</p>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => goToStep(4)}
-                      className="text-sm text-orange hover:underline"
-                    >
+                    <button type="button" onClick={() => goToStep(5)} className="text-sm text-orange hover:underline">
                       Edit
                     </button>
                   </div>
                 )}
               </div>
+
+              {/* Session Schedule Table for Package Bookings */}
+              {packageSize > 1 && sessionDates.length > 0 && (
+                <div className="rounded-xl border border-border bg-card overflow-hidden">
+                  <div className="px-6 py-4 bg-cream border-b border-border">
+                    <h3 className="font-semibold text-charcoal">Session Schedule</h3>
+                    <p className="text-sm text-muted">{packageSize} sessions, {frequency}</p>
+                  </div>
+                  <div className="divide-y divide-border max-h-64 overflow-y-auto">
+                    {sessionDates.map((dateStr, i) => {
+                      const d = new Date(dateStr + "T00:00:00");
+                      const dayName = d.toLocaleDateString("en-IN", { weekday: "short" });
+                      return (
+                        <div key={i} className="flex items-center justify-between px-6 py-3">
+                          <div className="flex items-center gap-3">
+                            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-orange/10 text-orange text-xs font-semibold">
+                              {i + 1}
+                            </span>
+                            <span className="text-body">
+                              {formatDate(dateStr)}
+                              <span className="text-muted text-sm ml-2">({dayName})</span>
+                            </span>
+                          </div>
+                          <span className="text-sm text-muted">
+                            {TIME_SLOTS.find((s) => s.id === timeSlot)?.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               {submitError && (
                 <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-red-700 text-sm">
                   {submitError}
@@ -817,7 +969,7 @@ function BookPageContent() {
               <div className="flex justify-between pt-4">
                 <button
                   type="button"
-                  onClick={() => goBack(4)}
+                  onClick={() => goBack(5)}
                   className="px-4 py-2.5 rounded-lg border border-border text-body hover:bg-cream transition"
                 >
                   Back
@@ -837,16 +989,17 @@ function BookPageContent() {
                       Submitting...
                     </>
                   ) : (
-                    "Submit Booking"
+                    packageSize > 1 ? `Book ${packageSize} Sessions` : "Submit Booking"
                   )}
                 </button>
               </div>
             </motion.div>
           )}
 
-          {step === 6 && (
+          {/* Step 7: Confirmation */}
+          {step === 7 && (
             <motion.div
-              key="step6"
+              key="step7"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
@@ -863,16 +1016,27 @@ function BookPageContent() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </motion.div>
-              <h2 className="text-2xl font-semibold text-charcoal mb-2">Booking Submitted!</h2>
-              <p className="text-muted mb-4">Your booking reference</p>
-              <p className="text-2xl font-bold text-orange mb-2">{bookingId}</p>
+              <h2 className="text-2xl font-semibold text-charcoal mb-2">
+                {packageSize > 1 ? "Package Booked!" : "Booking Submitted!"}
+              </h2>
+              <p className="text-muted mb-4">
+                {packageSize > 1 ? "Your package reference" : "Your booking reference"}
+              </p>
+              <p className="text-2xl font-bold text-orange mb-2">{packageId || bookingId}</p>
+              {packageSize > 1 && (
+                <p className="text-sm text-muted mb-2">
+                  {packageSize} sessions booked ({frequency})
+                </p>
+              )}
               {assignedTime && (
                 <p className="text-lg font-semibold text-teal mb-4">
-                  Appointment Time: {assignedTime}
+                  First Appointment: {assignedTime}
                 </p>
               )}
               <p className="text-body max-w-md mx-auto mb-8">
-                Your booking request has been submitted! The clinic will contact you to confirm your appointment.
+                {packageSize > 1
+                  ? "Your package booking has been submitted! The clinic will contact you to confirm all session appointments."
+                  : "Your booking request has been submitted! The clinic will contact you to confirm your appointment."}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button

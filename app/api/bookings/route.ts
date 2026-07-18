@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { appendRow, readExcel, getNextId } from "@/lib/blob-excel";
+import { appendRow, readExcel, getNextId, writeExcel } from "@/lib/blob-excel";
 import { getCurrentTimestamp } from "@/lib/utils";
+import { generateSessionDates, type Frequency } from "@/lib/schedule";
 import treatmentsData from "@/data/treatments.json";
 
 interface BookingRow {
@@ -14,6 +15,9 @@ interface BookingRow {
   "Condition Notes"?: string;
   Status: string;
   "Submitted At": string;
+  "Package ID"?: string;
+  Session?: string;
+  Frequency?: string;
 }
 
 const treatments = treatmentsData as { name: string; slug: string }[];
@@ -42,10 +46,23 @@ function getNextAvailableTime(bookings: BookingRow[], date: string, slotLabel: s
   return slotTimes.find((t) => !booked.includes(t)) || null;
 }
 
+async function getNextPackageId(bookings: BookingRow[]): Promise<string> {
+  const pkgNums = bookings
+    .filter((b) => b["Package ID"])
+    .map((b) => {
+      const match = b["Package ID"]!.match(/\d+$/);
+      return match ? parseInt(match[0], 10) : 0;
+    })
+    .filter((n) => !isNaN(n));
+
+  const max = pkgNums.length > 0 ? Math.max(...pkgNums) : 0;
+  return `PKG-${String(max + 1).padStart(3, "0")}`;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { treatment, date, timeSlot, name, phone, age, notes } = body;
+    const { treatment, date, timeSlot, name, phone, age, notes, packageSize, frequency } = body;
 
     if (!treatment || !date || !timeSlot || !name || !phone) {
       return NextResponse.json(
@@ -55,33 +72,88 @@ export async function POST(request: NextRequest) {
     }
 
     const bookings = await readExcel<BookingRow>("bookings.xlsx");
-    const assignedTime = getNextAvailableTime(bookings, date, timeSlot);
+    const treatmentName = getTreatmentName(treatment);
+    const timestamp = getCurrentTimestamp();
+    const isPackage = packageSize && packageSize > 1 && frequency;
 
-    if (!assignedTime) {
+    if (!isPackage) {
+      const assignedTime = getNextAvailableTime(bookings, date, timeSlot);
+      if (!assignedTime) {
+        return NextResponse.json(
+          { error: `No available slots for ${timeSlot} on ${date}. Please choose a different time.` },
+          { status: 409 }
+        );
+      }
+
+      const bookingId = await getNextId("bookings.xlsx", "BK");
+      const row: BookingRow = {
+        ID: bookingId,
+        Name: String(name).trim(),
+        Phone: String(phone).trim(),
+        Age: age != null && age !== "" ? Number(age) : undefined,
+        Treatment: treatmentName,
+        "Preferred Date": String(date),
+        "Preferred Time": assignedTime,
+        "Condition Notes": notes ? String(notes).trim() : undefined,
+        Status: "Pending",
+        "Submitted At": timestamp,
+      };
+
+      await appendRow<BookingRow>("bookings.xlsx", row);
+      return NextResponse.json({ success: true, bookingId, assignedTime });
+    }
+
+    const sessionDates = generateSessionDates(date, packageSize, frequency as Frequency);
+    const pkgId = await getNextPackageId(bookings);
+
+    const firstAssignedTime = getNextAvailableTime(bookings, sessionDates[0], timeSlot);
+    if (!firstAssignedTime) {
       return NextResponse.json(
-        { error: `No available slots for ${timeSlot} on ${date}. Please choose a different time.` },
+        { error: `No available slots for ${timeSlot} on ${sessionDates[0]}. Please choose a different date or time.` },
         { status: 409 }
       );
     }
 
-    const bookingId = await getNextId("bookings.xlsx", "BK");
-    const treatmentName = getTreatmentName(treatment);
+    const allBookings = [...bookings];
+    const newRows: BookingRow[] = [];
+    let firstBookingId = "";
 
-    const row: BookingRow = {
-      ID: bookingId,
-      Name: String(name).trim(),
-      Phone: String(phone).trim(),
-      Age: age != null && age !== "" ? Number(age) : undefined,
-      Treatment: treatmentName,
-      "Preferred Date": String(date),
-      "Preferred Time": assignedTime,
-      "Condition Notes": notes ? String(notes).trim() : undefined,
-      Status: "Pending",
-      "Submitted At": getCurrentTimestamp(),
-    };
+    for (let i = 0; i < sessionDates.length; i++) {
+      const sessionDate = sessionDates[i];
+      const assignedTime = getNextAvailableTime([...allBookings, ...newRows], sessionDate, timeSlot);
 
-    await appendRow<BookingRow>("bookings.xlsx", row);
-    return NextResponse.json({ success: true, bookingId, assignedTime });
+      const idNum = allBookings.length + newRows.length + 1;
+      const bookingId = `BK-${String(idNum).padStart(3, "0")}`;
+      if (i === 0) firstBookingId = bookingId;
+
+      const row: BookingRow = {
+        ID: bookingId,
+        Name: String(name).trim(),
+        Phone: String(phone).trim(),
+        Age: age != null && age !== "" ? Number(age) : undefined,
+        Treatment: treatmentName,
+        "Preferred Date": sessionDate,
+        "Preferred Time": assignedTime || timeSlot,
+        "Condition Notes": i === 0 && notes ? String(notes).trim() : undefined,
+        Status: "Pending",
+        "Submitted At": timestamp,
+        "Package ID": pkgId,
+        Session: `${i + 1} of ${packageSize}`,
+        Frequency: frequency,
+      };
+
+      newRows.push(row);
+    }
+
+    await writeExcel<BookingRow>("bookings.xlsx", [...allBookings, ...newRows]);
+
+    return NextResponse.json({
+      success: true,
+      bookingId: firstBookingId,
+      packageId: pkgId,
+      assignedTime: firstAssignedTime,
+      sessionsBooked: sessionDates.length,
+    });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to create booking";
     return NextResponse.json({ error: message }, { status: 500 });
