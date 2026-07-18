@@ -1,6 +1,7 @@
 import HeroSection from "@/components/home/HeroSection";
 import TrustBar from "@/components/home/TrustBar";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
+import SpecialtyServices from "@/components/home/SpecialtyServices";
 import AnimatedCounters from "@/components/home/AnimatedCounters";
 import CategoryCards from "@/components/home/CategoryCards";
 import DiagnosticTests from "@/components/home/DiagnosticTests";
@@ -16,6 +17,7 @@ export default function Home() {
       <HeroSection />
       <TrustBar />
       <WhyChooseUs />
+      <SpecialtyServices />
       <AnimatedCounters />
       <CategoryCards />
       <DiagnosticTests />
