@@ -6,42 +6,61 @@ import MobileCarousel from "@/components/ui/MobileCarousel";
 
 const specialties = [
   {
-    name: "Cupping Therapy",
-    slug: "cupping-therapy",
+    name: "Dry Needling",
+    slug: "dry-needling",
+    price: "₹1,500",
+    priceLabel: "per session",
     description:
-      "Therapeutic suction cups relieve deep muscle tension, boost blood flow, and accelerate healing for chronic pain and sports soreness.",
-    benefits: ["Pain Relief", "Muscle Recovery", "Improved Circulation"],
-    sessions: "4–8 sessions",
+      "Precision trigger point needling releases stubborn muscle knots, eases referred pain, and restores normal muscle function fast.",
+    benefits: ["Trigger Point Release", "Chronic Pain Relief", "Faster Healing"],
+    sessions: "8 / 10 / 30 sessions",
     icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+      <svg className="w-8 h-8" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+        <line x1="36" y1="6" x2="12" y2="42" />
+        <line x1="12" y1="42" x2="10" y2="38" />
+        <line x1="12" y1="42" x2="16" y2="40" />
+        <circle cx="30" cy="14" r="2" fill="currentColor" stroke="none" />
       </svg>
     ),
   },
   {
-    name: "Dry Needling",
-    slug: "dry-needling",
+    name: "Cupping (IASTM)",
+    slug: "cupping-therapy",
+    price: "₹1,500",
+    priceLabel: "per session",
     description:
-      "Precision trigger point needling releases stubborn muscle knots, eases referred pain, and restores normal muscle function fast.",
-    benefits: ["Trigger Point Release", "Chronic Pain Relief", "Faster Healing"],
-    sessions: "4–8 sessions",
+      "Therapeutic suction cups relieve deep muscle tension, boost blood flow, and accelerate healing for chronic pain and sports soreness.",
+    benefits: ["Pain Relief", "Muscle Recovery", "Improved Circulation"],
+    sessions: "8 / 10 / 30 sessions",
     icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.047 8.287 8.287 0 009 9.601a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 00.495-7.468 5.99 5.99 0 00-1.925 3.547 5.975 5.975 0 01-2.133-1.001A3.75 3.75 0 0012 18z" />
+      <svg className="w-8 h-8" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10 30 C10 18, 16 14, 16 14 L22 14 C22 14, 28 18, 28 30 Z" />
+        <line x1="16" y1="14" x2="16" y2="10" />
+        <line x1="22" y1="14" x2="22" y2="10" />
+        <line x1="14" y1="10" x2="24" y2="10" />
+        <path d="M26 32 C26 22, 31 19, 31 19 L36 19 C36 19, 41 22, 41 32 Z" />
+        <line x1="31" y1="19" x2="31" y2="16" />
+        <line x1="36" y1="19" x2="36" y2="16" />
+        <line x1="29" y1="16" x2="38" y2="16" />
       </svg>
     ),
   },
   {
     name: "Kinesiology Taping",
     slug: "kinesiology-taping",
+    price: "₹500",
+    priceLabel: "per session",
     description:
       "Elastic therapeutic tape supports muscles and joints, reduces swelling, and improves movement — without restricting your range of motion.",
     benefits: ["Joint Support", "Swelling Reduction", "Full Mobility"],
-    sessions: "4–8 sessions",
+    sessions: "8 / 10 / 30 sessions",
     icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+      <svg className="w-8 h-8" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="20" cy="24" r="10" />
+        <circle cx="20" cy="24" r="5" />
+        <path d="M30 24 C30 24, 36 22, 42 24" />
+        <path d="M30 21 C30 21, 36 19, 42 21" />
+        <path d="M30 27 C30 27, 36 25, 42 27" />
       </svg>
     ),
   },
@@ -58,8 +77,14 @@ function SpecialtyCard({ specialty, i }: { specialty: typeof specialties[number]
     >
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange to-orange-dark scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
       <div className="p-6 flex-1 flex flex-col">
-        <div className="w-14 h-14 bg-orange/10 text-orange rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:bg-orange group-hover:text-white group-hover:shadow-lg group-hover:shadow-orange/20">
-          {specialty.icon}
+        <div className="flex items-start justify-between mb-5">
+          <div className="w-14 h-14 bg-orange/10 text-orange rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:bg-orange group-hover:text-white group-hover:shadow-lg group-hover:shadow-orange/20">
+            {specialty.icon}
+          </div>
+          <div className="text-right">
+            <span className="text-xl font-bold text-orange">{specialty.price}</span>
+            <p className="text-xs text-muted">{specialty.priceLabel}</p>
+          </div>
         </div>
         <h3 className="font-heading font-bold text-xl text-charcoal mb-3 group-hover:text-orange transition-colors">
           {specialty.name}
@@ -78,7 +103,7 @@ function SpecialtyCard({ specialty, i }: { specialty: typeof specialties[number]
           ))}
         </div>
         <div className="flex items-center justify-between pt-4 border-t border-border">
-          <span className="text-sm text-muted">{specialty.sessions}</span>
+          <span className="text-sm text-muted font-medium">{specialty.sessions}</span>
           <Link
             href={`/book?treatment=${specialty.slug}`}
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-orange hover:text-orange-dark transition-colors"
