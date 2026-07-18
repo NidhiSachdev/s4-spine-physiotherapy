@@ -433,20 +433,34 @@ export default function ContactPage() {
         >
           <div className="rounded-xl border border-border overflow-hidden">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.8!2d72.908!3d19.086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6368b1f12ab%3A0x2b15e832eaf113a1!2sS4%20Spine%20Physiotherapy%20Clinic!5e0!3m2!1sen!2sin!4v1709308800000!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1885.4!2d72.9074!3d19.0860!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6368b1f12ab%3A0x2b15e832eaf113a1!2sS4%20Spine%20Physiotherapy%20Clinic!5e0!3m2!1sen!2sin!4v1709308800000!5m2!1sen!2sin"
               width="100%"
               height="400"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="S4 Spine Physiotherapy Clinic Location"
+              title="S4 Spine Physiotherapy Clinic - Physiotherapy Clinic in Ghatkopar East, Mumbai"
               className="w-full"
             />
           </div>
-          <p className="text-center text-muted text-sm mt-2">
-            S4 Spine Physiotherapy Clinic
-          </p>
+          <div className="flex items-center justify-center gap-4 mt-3">
+            <p className="text-muted text-sm">
+              S4 Spine Physiotherapy Clinic, Ghatkopar East
+            </p>
+            <a
+              href="https://www.google.com/maps/dir//S4+Spine+Physiotherapy+Clinic,+Shop+No+8,+Vishwas+CHS,+Patel+Chowk,+RB+Mehta+Marg,+Pant+Nagar,+Ghatkopar+East,+Mumbai,+Maharashtra+400077"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-orange hover:text-orange-dark transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Get Directions
+            </a>
+          </div>
         </motion.div>
 
         <motion.div
